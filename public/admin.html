@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuinnov8 — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1F3A; --navy-mid: #152E52; --navy-light: #1E3D6B;
+  --blue: #1A6FBF; --blue-light: #EBF4FF;
+  --accent: #C8A96E; --accent-light: #FEF3E2;
+  --cream: #F7F3EE; --cream-dark: #EDE8E0;
+  --white: #fff;
+  --text: #0B1F3A; --text-mid: #4A5568; --text-light: #8A9AB0;
+  --success: #2D7D5A; --success-bg: #E6F5EE;
+  --warn: #B5620A; --warn-bg: #FEF3E2;
+  --danger: #B02A2A; --danger-bg: #FDEAEA;
+  --purple: #6B46C1; --purple-bg: #EDE9FE;
+  --radius: 10px; --radius-lg: 16px;
+  --sidebar: 240px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #F0EDE8; color: var(--text); min-height: 100vh; }
+
+/* ── LOGIN ── */
+#login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--navy);
+  background-image: radial-gradient(circle at 20% 50%, rgba(26,111,191,0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(200,169,110,0.1) 0%, transparent 40%);
+}
+.login-card {
+  background: white; border-radius: var(--radius-lg); padding: 48px;
+  width: 100%; max-width: 400px; box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.login-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+.login-logo-mark {
+  width: 36px; height: 36px; background: var(--navy); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 18px;
+}
+.login-logo-name { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--navy); }
+.login-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--navy); margin-bottom: 6px; }
+.login-sub { font-size: 14px; color: var(--text-light); margin-bottom: 28px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.field input {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 14px;
+  color: var(--text); outline: none; transition: border-color 0.15s;
+}
+.field input:focus { border-color: var(--blue); }
+.login-err { font-size: 13px; color: var(--danger); margin-bottom: 12px; display: none; }
+.btn-login {
+  width: 100%; padding: 13px; border-radius: var(--radius); background: var(--navy);
+  color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+  border: none; cursor: pointer; transition: background 0.2s; margin-top: 4px;
+}
+.btn-login:hover { background: var(--navy-light); }
+
+/* ── SHELL ── */
+#app { display: none; min-height: 100vh; }
+.shell { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar); background: var(--navy);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto;
+}
+.sb-logo { display: flex; align-items: center; gap: 10px; padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.sb-logo-mark { width: 30px; height: 30px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.sb-logo-name { font-family: 'DM Serif Display', serif; font-size: 15px; color: white; }
+.sb-section-label { font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 20px 20px 8px; }
+.sb-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 12px; }
+.sb-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px; cursor: pointer;
+  color: rgba(255,255,255,0.55); font-size: 14px; font-weight: 400;
+  transition: background 0.15s, color 0.15s; border: none; background: none; width: 100%; text-align: left;
+}
+.sb-link:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
+.sb-link.active { background: rgba(255,255,255,0.1); color: white; }
+.sb-link-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.sb-badge {
+  margin-left: auto; background: var(--accent); color: var(--navy);
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px;
+}
+.sb-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.07); }
+.sb-user { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+.btn-logout {
+  width: 100%; padding: 8px; border-radius: 7px; background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.55); font-family: 'DM Sans', sans-serif; font-size: 13px;
+  border: none; cursor: pointer; transition: background 0.15s;
+}
+.btn-logout:hover { background: rgba(255,255,255,0.12); }
+
+/* ── MAIN ── */
+.main { margin-left: var(--sidebar); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+.topbar {
+  background: white; border-bottom: 1px solid var(--cream-dark);
+  padding: 18px 32px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--navy); }
+.topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.btn-refresh {
+  padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--cream-dark);
+  background: white; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-mid);
+  cursor: pointer; transition: border-color 0.15s;
+}
+.btn-refresh:hover { border-color: var(--blue); }
+
+.content { padding: 32px; flex: 1; }
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── STAT CARDS ── */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: white; border-radius: var(--radius-lg); padding: 24px;
+  border: 1px solid var(--cream-dark); display: flex; flex-direction: column; gap: 8px;
+}
+.stat-icon { font-size: 24px; }
+.stat-val { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--navy); line-height: 1; }
+.stat-label { font-size: 13px; color: var(--text-light); }
+.stat-delta { font-size: 12px; font-weight: 500; margin-top: 4px; }
+.delta-up { color: var(--success); }
+.delta-new { color: var(--warn); }
+
+/* ── TABLES ── */
+.table-card {
+  background: white; border-radius: var(--radius-lg); border: 1px solid var(--cream-dark); overflow: hidden;
+}
+.table-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; border-bottom: 1px solid var(--cream-dark);
+}
+.table-title { font-size: 16px; font-weight: 600; color: var(--navy); }
+.table-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.table-filters { display: flex; gap: 8px; }
+.filter-select {
+  padding: 7px 12px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: white; outline: none;
+}
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left; font-size: 11px; font-family: 'Space Mono', monospace; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text-light); padding: 12px 20px;
+  background: #FAFAF8; border-bottom: 1px solid var(--cream-dark); white-space: nowrap;
+}
+td { padding: 14px 20px; border-bottom: 1px solid var(--cream-dark); font-size: 14px; color: var(--text); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #FAFAF8; }
+.td-name { font-weight: 500; }
+.td-biz { color: var(--navy); font-weight: 500; }
+.td-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 500; white-space: nowrap;
+}
+.badge-new { background: var(--blue-light); color: var(--blue); }
+.badge-pending { background: var(--warn-bg); color: var(--warn); }
+.badge-contacted { background: var(--success-bg); color: var(--success); }
+.badge-closed { background: var(--cream-dark); color: var(--text-light); }
+.badge-high { background: var(--danger-bg); color: var(--danger); }
+.badge-medium { background: var(--warn-bg); color: var(--warn); }
+.badge-low { background: var(--success-bg); color: var(--success); }
+.badge-impl { background: var(--purple-bg); color: var(--purple); }
+
+.btn-view {
+  padding: 6px 14px; border-radius: 6px; background: var(--blue-light); color: var(--blue);
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; border: none; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-view:hover { background: #D6EAFF; }
+.btn-action {
+  padding: 6px 12px; border-radius: 6px; border: 1.5px solid var(--cream-dark);
+  background: white; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-mid);
+  cursor: pointer; transition: border-color 0.15s; margin-left: 4px;
+}
+.btn-action:hover { border-color: var(--blue); color: var(--blue); }
+
+.empty-state {
+  text-align: center; padding: 60px 20px; color: var(--text-light);
+}
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+.empty-text { font-size: 14px; }
+
+/* ── SECTOR CHART ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.chart-bars { padding: 20px 24px; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.bar-label { font-size: 13px; color: var(--text-mid); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track { flex: 1; height: 8px; background: var(--cream-dark); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--blue); border-radius: 4px; transition: width 0.6s ease; }
+.bar-count { font-size: 13px; font-weight: 500; color: var(--navy); width: 24px; text-align: right; flex-shrink: 0; }
+
+/* ── DETAIL PANEL ── */
+.detail-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(11,31,58,0.6); backdrop-filter: blur(3px);
+  align-items: flex-start; justify-content: flex-end;
+}
+.detail-overlay.open { display: flex; }
+.detail-panel {
+  width: 520px; height: 100vh; background: white; overflow-y: auto;
+  box-shadow: -8px 0 48px rgba(0,0,0,0.2); animation: slideIn 0.25s ease;
+}
+@keyframes slideIn { from{transform:translateX(40px);opacity:0} to{transform:translateX(0);opacity:1} }
+.detail-top {
+  padding: 24px 28px; border-bottom: 1px solid var(--cream-dark);
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: white; z-index: 1;
+}
+.detail-top-title { font-size: 16px; font-weight: 600; color: var(--navy); }
+.btn-close-panel {
+  width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--cream);
+  cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.btn-close-panel:hover { background: var(--cream-dark); }
+.detail-body { padding: 28px; }
+.detail-section { margin-bottom: 28px; }
+.detail-section-title {
+  font-size: 11px; font-family: 'Space Mono', monospace; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-light); margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark);
+}
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.detail-item {}
+.detail-item-label { font-size: 11px; color: var(--text-light); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+.detail-item-val { font-size: 14px; color: var(--navy); font-weight: 500; }
+.detail-desc { font-size: 14px; color: var(--text-mid); line-height: 1.7; background: var(--cream); padding: 14px; border-radius: 8px; }
+.detail-recs { display: flex; flex-direction: column; gap: 10px; }
+.detail-rec { display: flex; gap: 10px; padding: 12px; background: var(--blue-light); border-radius: 8px; }
+.detail-rec-num { width: 22px; height: 22px; background: var(--blue); color: white; border-radius: 50%; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.detail-rec-text { font-size: 13px; color: var(--navy); line-height: 1.5; }
+.status-select {
+  width: 100%; padding: 10px 14px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: white; outline: none;
+  transition: border-color 0.15s;
+}
+.status-select:focus { border-color: var(--blue); }
+.notes-area {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--cream-dark); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); resize: vertical; outline: none;
+  min-height: 90px; transition: border-color 0.15s;
+}
+.notes-area:focus { border-color: var(--blue); }
+.btn-save {
+  padding: 10px 22px; border-radius: 8px; background: var(--navy); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; border: none; cursor: pointer;
+  transition: background 0.15s; margin-top: 10px;
+}
+.btn-save:hover { background: var(--navy-light); }
+.save-msg { font-size: 13px; color: var(--success); margin-top: 8px; display: none; }
+
+.score-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500;
+}
+
+/* Pagination */
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-top: 1px solid var(--cream-dark); }
+.page-info { font-size: 13px; color: var(--text-light); }
+.page-btns { display: flex; gap: 6px; }
+.btn-page {
+  padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--cream-dark);
+  background: white; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-mid);
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-page:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+.btn-page:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-page.active { background: var(--navy); color: white; border-color: var(--navy); }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-mark">⚡</div>
+      <span class="login-logo-name">Tuinnov8</span>
+    </div>
+    <h2 class="login-title">Admin Dashboard</h2>
+    <p class="login-sub">Sign in to view assessments, consultations, and implementation requests.</p>
+    <div class="login-err" id="login-err">Invalid username or password.</div>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="l-user" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-mark">⚡</div>
+        <span class="sb-logo-name">Tuinnov8</span>
+      </div>
+      <div class="sb-section-label">Main</div>
+      <nav class="sb-nav">
+        <button class="sb-link active" onclick="showView('overview')" id="nav-overview">
+          <span class="sb-link-icon">📊</span> Overview
+        </button>
+        <button class="sb-link" onclick="showView('assessments')" id="nav-assessments">
+          <span class="sb-link-icon">📋</span> Assessments
+          <span class="sb-badge" id="badge-assessments" style="display:none"></span>
+        </button>
+      </nav>
+      <div class="sb-section-label">Requests</div>
+      <nav class="sb-nav">
+        <button class="sb-link" onclick="showView('consultations')" id="nav-consultations">
+          <span class="sb-link-icon">📅</span> Consultations
+          <span class="sb-badge" id="badge-consultations" style="display:none"></span>
+        </button>
+        <button class="sb-link" onclick="showView('implementations')" id="nav-implementations">
+          <span class="sb-link-icon">⚡</span> Implementation Requests
+          <span class="sb-badge" id="badge-implementations" style="display:none"></span>
+        </button>
+      </nav>
+      <div class="sb-footer">
+        <div class="sb-user" id="sb-username"></div>
+        <button class="btn-logout" onclick="doLogout()">Sign out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="topbar">
+        <div>
+          <div class="topbar-title" id="topbar-title">Overview</div>
+          <div class="topbar-sub" id="topbar-sub">Welcome back</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn-refresh" onclick="refreshCurrent()">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- OVERVIEW -->
+        <div class="view active" id="view-overview">
+          <div class="stats-grid" id="stats-grid">
+            <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val" id="s-assessments">—</div><div class="stat-label">Total Assessments</div><div class="stat-delta delta-up" id="s-recent"></div></div>
+            <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val" id="s-consultations">—</div><div class="stat-label">Consultation Requests</div><div class="stat-delta delta-new" id="s-new-consult"></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-val" id="s-implementations">—</div><div class="stat-label">Implementation Requests</div><div class="stat-delta delta-new" id="s-new-impl"></div></div>
+            <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val" id="s-conversion">—</div><div class="stat-label">Conversion Rate</div><div class="stat-delta" style="color:var(--text-light);font-size:12px">Assessments → Requests</div></div>
+          </div>
+          <div class="two-col">
+            <div class="table-card">
+              <div class="table-header"><div><div class="table-title">Assessments by Sector</div><div class="table-sub">Distribution of completed assessments</div></div></div>
+              <div class="chart-bars" id="sector-chart"></div>
+            </div>
+            <div class="table-card">
+              <div class="table-header"><div><div class="table-title">Recent Activity</div><div class="table-sub">Latest submissions across all types</div></div></div>
+              <div id="recent-activity" style="padding:0 24px 16px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASSESSMENTS -->
+        <div class="view" id="view-assessments">
+          <div class="table-card">
+            <div class="table-header">
+              <div><div class="table-title">All Assessments</div><div class="table-sub" id="assess-count-sub">Loading...</div></div>
+              <div class="table-filters">
+                <select class="filter-select" id="filter-sector" onchange="loadAssessments(1)">
+                  <option value="">All Sectors</option>
+                  <option>Healthcare / Clinic</option><option>Retail / FMCG</option>
+                  <option>Food & Beverage</option><option>Education</option>
+                  <option>Logistics / Transport</option><option>Finance / SACCO</option>
+                  <option>Hospitality</option><option>Professional Services</option>
+                </select>
+              </div>
+            </div>
+            <table>
+              <thead><tr>
+                <th>Business</th><th>Sector</th><th>Team Size</th><th>Maturity</th><th>Submitted</th><th>Status</th><th></th>
+              </tr></thead>
+              <tbody id="assess-tbody"></tbody>
+            </table>
+            <div class="pagination" id="assess-pagination"></div>
+          </div>
+        </div>
+
+        <!-- CONSULTATIONS -->
+        <div class="view" id="view-consultations">
+          <div class="table-card">
+            <div class="table-header">
+              <div><div class="table-title">Consultation Requests</div><div class="table-sub">Businesses that requested a free consultation</div></div>
+            </div>
+            <table>
+              <thead><tr>
+                <th>Name</th><th>Contact</th><th>Time Preference</th><th>Submitted</th><th>Status</th><th></th>
+              </tr></thead>
+              <tbody id="consult-tbody"></tbody>
+            </table>
+            <div class="empty-state" id="consult-empty" style="display:none">
+              <div class="empty-icon">📅</div>
+              <div class="empty-text">No consultation requests yet.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMPLEMENTATIONS -->
+        <div class="view" id="view-implementations">
+          <div class="table-card">
+            <div class="table-header">
+              <div><div class="table-title">Tuinnov8 Implementation Requests</div><div class="table-sub">Businesses ready to begin implementation</div></div>
+            </div>
+            <table>
+              <thead><tr>
+                <th>Name</th><th>Contact</th><th>Timeline</th><th>Budget</th><th>Submitted</th><th>Status</th><th></th>
+              </tr></thead>
+              <tbody id="impl-tbody"></tbody>
+            </table>
+            <div class="empty-state" id="impl-empty" style="display:none">
+              <div class="empty-icon">⚡</div>
+              <div class="empty-text">No implementation requests yet.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closePanel()">
+  <div class="detail-panel" id="detail-panel"></div>
+</div>
+
+<script>
+const API = '';
+let currentView = 'overview';
+let assessPage = 1;
+
+// ── AUTH ──────────────────────────────────────────────
+async function doLogin() {
+  const user = document.getElementById('l-user').value.trim();
+  const pass = document.getElementById('l-pass').value.trim();
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+  try {
+    const r = await fetch(`${API}/api/admin/login`, {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ username: user, password: pass })
+    });
+    if (r.ok) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      document.getElementById('sb-username').textContent = user;
+      loadOverview();
+    } else {
+      err.style.display = 'block';
+    }
+  } catch(e) { err.textContent = 'Cannot connect to server.'; err.style.display = 'block'; }
+}
+
+async function doLogout() {
+  await fetch(`${API}/api/admin/logout`, { method:'POST', credentials:'include' });
+  location.reload();
+}
+
+async function checkAuth() {
+  try {
+    const r = await fetch(`${API}/api/admin/me`, { credentials:'include' });
+    const d = await r.json();
+    if (d.authenticated) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      document.getElementById('sb-username').textContent = d.username;
+      loadOverview();
+    }
+  } catch(e) {}
+}
+
+// ── NAV ───────────────────────────────────────────────
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  document.getElementById(`view-${name}`).classList.add('active');
+  document.getElementById(`nav-${name}`).classList.add('active');
+  currentView = name;
+  const titles = { overview:'Overview', assessments:'Assessments', consultations:'Consultations', implementations:'Implementation Requests' };
+  const subs = { overview:'Dashboard summary', assessments:'All submitted business assessments', consultations:'Scheduled consultation requests', implementations:'Implementation requests via Tuinnov8' };
+  document.getElementById('topbar-title').textContent = titles[name];
+  document.getElementById('topbar-sub').textContent = subs[name];
+  if (name === 'overview') loadOverview();
+  if (name === 'assessments') loadAssessments(1);
+  if (name === 'consultations') loadConsultations();
+  if (name === 'implementations') loadImplementations();
+}
+
+function refreshCurrent() { showView(currentView); }
+
+// ── OVERVIEW ──────────────────────────────────────────
+async function loadOverview() {
+  try {
+    const r = await fetch(`${API}/api/admin/stats`, { credentials:'include' });
+    const d = await r.json();
+
+    document.getElementById('s-assessments').textContent = d.assessments;
+    document.getElementById('s-consultations').textContent = d.consultations;
+    document.getElementById('s-implementations').textContent = d.implementations;
+    document.getElementById('s-recent').textContent = `+${d.recentAssessments} this week`;
+
+    const nc = d.newConsultations;
+    const ni = d.newImplementations;
+    document.getElementById('s-new-consult').textContent = nc > 0 ? `${nc} pending` : 'All actioned';
+    document.getElementById('s-new-impl').textContent = ni > 0 ? `${ni} pending` : 'All actioned';
+
+    const total = d.assessments;
+    const requests = d.consultations + d.implementations;
+    const conv = total > 0 ? Math.round((requests / total) * 100) : 0;
+    document.getElementById('s-conversion').textContent = conv + '%';
+
+    // Badges
+    if (nc > 0) { document.getElementById('badge-consultations').textContent = nc; document.getElementById('badge-consultations').style.display = ''; }
+    if (ni > 0) { document.getElementById('badge-implementations').textContent = ni; document.getElementById('badge-implementations').style.display = ''; }
+
+    // Sector chart
+    const chart = document.getElementById('sector-chart');
+    const sectors = d.sectors || {};
+    const max = Math.max(...Object.values(sectors), 1);
+    const sorted = Object.entries(sectors).sort((a,b)=>b[1]-a[1]);
+    chart.innerHTML = sorted.length ? sorted.map(([s,c])=>`
+      <div class="bar-row">
+        <div class="bar-label" title="${s}">${s}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round((c/max)*100)}%"></div></div>
+        <div class="bar-count">${c}</div>
+      </div>`).join('') : '<div style="padding:20px;font-size:14px;color:var(--text-light)">No data yet.</div>';
+
+    // Recent activity — load from all three
+    const [ra, rc, ri] = await Promise.all([
+      fetch(`${API}/api/admin/assessments?page=1`, {credentials:'include'}).then(r=>r.json()),
+      fetch(`${API}/api/admin/consultations`, {credentials:'include'}).then(r=>r.json()),
+      fetch(`${API}/api/admin/implementations`, {credentials:'include'}).then(r=>r.json()),
+    ]);
+    const activities = [
+      ...(ra.docs||[]).slice(0,3).map(x=>({type:'assessment',label:x.bizName||'Unknown',sub:x.sector||'',date:x.submittedAt})),
+      ...(rc.docs||[]).slice(0,3).map(x=>({type:'consultation',label:x.name||'Unknown',sub:'Consultation request',date:x.submittedAt})),
+      ...(ri.docs||[]).slice(0,3).map(x=>({type:'implementation',label:x.name||'Unknown',sub:'Implementation request',date:x.submittedAt})),
+    ].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,8);
+
+    const icons = {assessment:'📋', consultation:'📅', implementation:'⚡'};
+    document.getElementById('recent-activity').innerHTML = activities.length ? activities.map(a=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--cream-dark)">
+        <span style="font-size:18px">${icons[a.type]}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500;color:var(--navy)">${a.label}</div>
+          <div style="font-size:12px;color:var(--text-light)">${a.sub}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-light)">${fmtDate(a.date)}</div>
+      </div>`).join('') : '<div style="padding:20px;font-size:14px;color:var(--text-light)">No activity yet.</div>';
+
+  } catch(e) { console.error(e); }
+}
+
+// ── ASSESSMENTS ───────────────────────────────────────
+async function loadAssessments(page=1) {
+  assessPage = page;
+  const sector = document.getElementById('filter-sector').value;
+  const params = new URLSearchParams({ page });
+  if (sector) params.set('sector', sector);
+  const r = await fetch(`${API}/api/admin/assessments?${params}`, { credentials:'include' });
+  const d = await r.json();
+
+  document.getElementById('assess-count-sub').textContent = `${d.total} total assessments`;
+  document.getElementById('badge-assessments').textContent = d.total;
+  if (d.total > 0) document.getElementById('badge-assessments').style.display = '';
+
+  const tbody = document.getElementById('assess-tbody');
+  tbody.innerHTML = d.docs.length ? d.docs.map(a => {
+    const overall = calcOverall(a);
+    return `<tr>
+      <td><div class="td-biz">${a.bizName||'—'}</div><div class="td-sub">${a.bizDesc ? a.bizDesc.substring(0,50)+'...' : ''}</div></td>
+      <td>${a.sector||'—'}</td>
+      <td>${a.size||'—'}</td>
+      <td>${overallBadge(overall)}</td>
+      <td style="white-space:nowrap">${fmtDate(a.submittedAt)}</td>
+      <td>${statusBadge(a.status||'new')}</td>
+      <td><button class="btn-view" onclick="openAssessment('${a._id}')">View →</button></td>
+    </tr>`;
+  }).join('') : `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No assessments yet.</div></div></td></tr>`;
+
+  // Pagination
+  const pg = document.getElementById('assess-pagination');
+  if (d.pages > 1) {
+    pg.innerHTML = `<div class="page-info">Page ${d.page} of ${d.pages} (${d.total} total)</div>
+    <div class="page-btns">
+      <button class="btn-page" onclick="loadAssessments(${page-1})" ${page<=1?'disabled':''}>← Prev</button>
+      <button class="btn-page" onclick="loadAssessments(${page+1})" ${page>=d.pages?'disabled':''}>Next →</button>
+    </div>`;
+    pg.style.display = 'flex';
+  } else { pg.style.display = 'none'; }
+}
+
+async function openAssessment(id) {
+  const r = await fetch(`${API}/api/admin/assessments/${id}`, { credentials:'include' });
+  const a = await r.json();
+  const overall = calcOverall(a);
+  const panel = document.getElementById('detail-panel');
+
+  const recs = buildRecs(a);
+
+  panel.innerHTML = `
+    <div class="detail-top">
+      <div class="detail-top-title">Assessment Detail</div>
+      <button class="btn-close-panel" onclick="closePanel()">✕</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-section">
+        <div class="detail-section-title">Business</div>
+        <div class="detail-grid">
+          <div class="detail-item"><div class="detail-item-label">Business Name</div><div class="detail-item-val">${a.bizName||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Sector</div><div class="detail-item-val">${a.sector||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Team Size</div><div class="detail-item-val">${a.size||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Submitted</div><div class="detail-item-val">${fmtDateFull(a.submittedAt)}</div></div>
+        </div>
+        ${a.bizDesc ? `<div style="margin-top:14px"><div class="detail-item-label" style="margin-bottom:6px">Business Description</div><div class="detail-desc">${a.bizDesc}</div></div>` : ''}
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Assessment Scores</div>
+        <div class="detail-grid">
+          <div class="detail-item"><div class="detail-item-label">Overall Maturity</div><div class="detail-item-val">${overallBadge(overall)}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Priority</div><div class="detail-item-val">${a.priority||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Operations</div><div class="detail-item-val">${a.ops||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Bottleneck</div><div class="detail-item-val">${a.bottleneck||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Customer Experience</div><div class="detail-item-val">${a.cx||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Data / Reporting</div><div class="detail-item-val">${a.data||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Digital Readiness</div><div class="detail-item-val">${a.digital||'—'}</div></div>
+          <div class="detail-item"><div class="detail-item-label">Infrastructure</div><div class="detail-item-val">${a.infra||'—'}</div></div>
+        </div>
+        ${a.extra ? `<div style="margin-top:14px"><div class="detail-item-label" style="margin-bottom:6px">Additional Context</div><div class="detail-desc">${a.extra}</div></div>` : ''}
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Generated Recommendations</div>
+        <div class="detail-recs">
+          ${recs.map((r,i)=>`<div class="detail-rec"><div class="detail-rec-num">${i+1}</div><div class="detail-rec-text"><strong>${r.t}</strong><br>${r.d}</div></div>`).join('')}
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Admin Actions</div>
+        <div class="detail-item-label" style="margin-bottom:6px">Status</div>
+        <select class="status-select" id="det-status">
+          <option value="new" ${(a.status||'new')==='new'?'selected':''}>🔵 New</option>
+          <option value="contacted" ${a.status==='contacted'?'selected':''}>🟡 Contacted</option>
+          <option value="closed" ${a.status==='closed'?'selected':''}>⚫ Closed</option>
+        </select>
+        <div class="detail-item-label" style="margin-top:14px;margin-bottom:6px">Internal Notes</div>
+        <textarea class="notes-area" id="det-notes" placeholder="Add internal notes about this lead...">${a.adminNotes||''}</textarea>
+        <button class="btn-save" onclick="saveAssessment('${a._id}')">Save Changes</button>
+        <div class="save-msg" id="det-save-msg">✓ Saved successfully</div>
+      </div>
+    </div>`;
+
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+async function saveAssessment(id) {
+  const status = document.getElementById('det-status').value;
+  const adminNotes = document.getElementById('det-notes').value;
+  await fetch(`${API}/api/admin/assessments/${id}`, {
+    method:'PATCH', credentials:'include',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ status, adminNotes })
+  });
+  const msg = document.getElementById('det-save-msg');
+  msg.style.display = 'block';
+  setTimeout(()=>msg.style.display='none', 2500);
+  loadAssessments(assessPage);
+}
+
+// ── CONSULTATIONS ─────────────────────────────────────
+async function loadConsultations() {
+  const r = await fetch(`${API}/api/admin/consultations`, { credentials:'include' });
+  const d = await r.json();
+  const tbody = document.getElementById('consult-tbody');
+  const empty = document.getElementById('consult-empty');
+  if (!d.docs || d.docs.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = d.docs.map(c=>`<tr>
+    <td><div class="td-name">${c.name||'—'}</div></td>
+    <td><div>${c.email||'—'}</div><div class="td-sub">${c.phone||''}</div></td>
+    <td>${c.time||'—'}</td>
+    <td style="white-space:nowrap">${fmtDate(c.submittedAt)}</td>
+    <td>${statusBadge(c.status||'pending')}</td>
+    <td>
+      <button class="btn-action" onclick="markConsult('${c._id}','contacted')">✓ Contacted</button>
+      <button class="btn-action" onclick="markConsult('${c._id}','closed')">Close</button>
+    </td>
+  </tr>`).join('');
+}
+
+async function markConsult(id, status) {
+  await fetch(`${API}/api/admin/consultations/${id}`, {
+    method:'PATCH', credentials:'include',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ status })
+  });
+  loadConsultations();
+  document.getElementById('badge-consultations').style.display = 'none';
+}
+
+// ── IMPLEMENTATIONS ───────────────────────────────────
+async function loadImplementations() {
+  const r = await fetch(`${API}/api/admin/implementations`, { credentials:'include' });
+  const d = await r.json();
+  const tbody = document.getElementById('impl-tbody');
+  const empty = document.getElementById('impl-empty');
+  if (!d.docs || d.docs.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = d.docs.map(c=>`<tr>
+    <td><div class="td-name">${c.name||'—'}</div></td>
+    <td><div>${c.email||'—'}</div><div class="td-sub">${c.phone||''}</div></td>
+    <td>${c.timeline||'—'}</td>
+    <td>${c.budget||'—'}</td>
+    <td style="white-space:nowrap">${fmtDate(c.submittedAt)}</td>
+    <td><span class="badge badge-impl">${c.status||'pending'}</span></td>
+    <td>
+      <button class="btn-action" onclick="markImpl('${c._id}','contacted')">✓ Contacted</button>
+      <button class="btn-action" onclick="markImpl('${c._id}','closed')">Close</button>
+    </td>
+  </tr>`).join('');
+}
+
+async function markImpl(id, status) {
+  await fetch(`${API}/api/admin/implementations/${id}`, {
+    method:'PATCH', credentials:'include',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ status })
+  });
+  loadImplementations();
+  document.getElementById('badge-implementations').style.display = 'none';
+}
+
+// ── PANEL ─────────────────────────────────────────────
+function closePanel() { document.getElementById('detail-overlay').classList.remove('open'); }
+
+// ── HELPERS ───────────────────────────────────────────
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+function fmtDateFull(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function calcOverall(a) {
+  const opsMap = {"Mostly paper-based":5,"Basic spreadsheets & email":28,"A mix of disconnected systems":55,"Well-integrated digital systems":88};
+  const dataMap = {"Gut feel and experience":5,"Periodic manual reports from staff":22,"Spreadsheets we update ourselves":42,"A software system with some reporting":68,"A live dashboard with real-time data":95};
+  const digMap = {"We avoid it — too complex or costly":5,"We use basic tools but struggle to adopt more":28,"We're open but need guidance":52,"We actively seek digital solutions":76,"We're already quite digitally advanced":94};
+  const infraMap = {"No reliable internet at our location":5,"Slow or inconsistent connection":25,"Reliable internet, basic devices":55,"Good internet, multiple computers/tablets":78,"Excellent — fibre, multiple modern devices":96};
+  const cxMap = {"Long wait times or slow service":15,"Difficulty booking or placing orders":20,"Poor follow-up after purchase":25,"Inconsistent service quality":30,"No online or self-service channel":35,"Customer experience is generally good":82};
+  const scores = [opsMap[a.ops]||30, dataMap[a.data]||30, digMap[a.digital]||30, infraMap[a.infra]||30, cxMap[a.cx]||50];
+  return Math.round(scores.reduce((x,y)=>x+y,0)/scores.length);
+}
+
+function overallBadge(v) {
+  if (v >= 68) return `<span class="badge badge-contacted">${v}% Strong</span>`;
+  if (v >= 42) return `<span class="badge badge-pending">${v}% Developing</span>`;
+  return `<span class="badge badge-high">${v}% Needs Attention</span>`;
+}
+
+function statusBadge(s) {
+  const map = { new:'badge-new', pending:'badge-pending', contacted:'badge-contacted', closed:'badge-closed' };
+  return `<span class="badge ${map[s]||'badge-new'}">${s}</span>`;
+}
+
+function buildRecs(a) {
+  const sectorRecs = {
+    "Healthcare / Clinic":{t:"Patient Appointment & Records System",d:"Digital booking and patient records"},
+    "Retail / FMCG":{t:"Inventory & POS System",d:"Real-time stock and sales analytics"},
+    "Food & Beverage":{t:"Online Ordering & Kitchen Management",d:"Digital orders and delivery tracking"},
+    "Education":{t:"Student & Parent Portal",d:"Fee tracking and communications"},
+    "Logistics / Transport":{t:"Fleet Management System",d:"Vehicle tracking and delivery confirmation"},
+    "Finance / SACCO":{t:"Member Dashboard",d:"Loan tracking and automated statements"},
+    "Hospitality":{t:"Reservation Management",d:"Booking and guest communications"},
+    "Professional Services":{t:"Client Portal",d:"Project management and invoicing"},
+  };
+  const recs = [];
+  if (a.sector && sectorRecs[a.sector]) recs.push(sectorRecs[a.sector]);
+  if ((calcOverall(a)) < 55) recs.push({t:"Process Automation",d:"Automate repetitive manual tasks"});
+  return recs.slice(0, 3);
+}
+
+// ── INIT ──────────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>

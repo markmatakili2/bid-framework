@@ -1,0 +1,2597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Innovation Discovery — Tuinnov8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0B1F3A;
+  --navy-mid: #152E52;
+  --navy-light: #1E3D6B;
+  --blue: #1A6FBF;
+  --blue-light: #2E8DE0;
+  --accent: #C8A96E;
+  --accent-light: #E2C98A;
+  --cream: #F7F3EE;
+  --cream-dark: #EDE8E0;
+  --white: #FFFFFF;
+  --text-dark: #0B1F3A;
+  --text-mid: #4A5568;
+  --text-light: #8A9AB0;
+  --success: #2D7D5A;
+  --success-bg: #E6F5EE;
+  --warn: #B5620A;
+  --warn-bg: #FEF3E2;
+  --danger: #B02A2A;
+  --danger-bg: #FDEAEA;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 24px rgba(11,31,58,0.10);
+  --shadow-lg: 0 12px 48px rgba(11,31,58,0.16);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── LANDING ─────────────────────────────── */
+#landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.land-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--navy);
+  overflow: hidden;
+}
+.land-bg::before {
+  content: '';
+  position: absolute;
+  width: 900px; height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,111,191,0.25) 0%, transparent 70%);
+  top: -300px; right: -200px;
+}
+.land-bg::after {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+  bottom: -100px; left: -100px;
+}
+.land-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.land-nav {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 60px;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 40px; height: 40px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 22px; height: 22px; }
+.logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+.nav-tag {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.land-hero {
+  position: relative; z-index: 10;
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 60px 40px 80px;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,169,110,0.15);
+  border: 1px solid rgba(200,169,110,0.3);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-light);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeUp 0.6s ease both;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(42px, 6vw, 80px);
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent-light);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.2s ease both;
+  font-weight: 300;
+}
+
+.hero-cta {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.btn-primary-land {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent);
+  color: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 100px;
+  border: none; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 8px 32px rgba(200,169,110,0.4);
+}
+.btn-primary-land:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,169,110,0.5);
+}
+.btn-ghost-land {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 16px 28px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost-land:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+.hero-stats {
+  position: relative; z-index: 10;
+  display: flex; justify-content: center; gap: 0;
+  padding: 0 60px 60px;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.stat-item {
+  text-align: center;
+  padding: 0 48px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--accent-light);
+}
+.stat-lbl { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── ASSESSMENT SHELL ───────────────────── */
+#assessment-page {
+  display: none;
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.assess-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--navy);
+  padding: 40px 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 48px; }
+.sidebar-logo-mark {
+  width: 34px; height: 34px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sidebar-logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: var(--white);
+}
+
+.sidebar-label {
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 16px;
+}
+
+.sidebar-steps { display: flex; flex-direction: column; gap: 2px; }
+
+.sidebar-step {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  cursor: default;
+}
+.sidebar-step.active { background: rgba(255,255,255,0.08); }
+.sidebar-step.done { opacity: 0.6; }
+.sidebar-step.upcoming { opacity: 0.3; }
+
+.step-circle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.sidebar-step.active .step-circle { background: var(--accent); color: var(--navy); }
+.sidebar-step.done .step-circle { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+.sidebar-step.upcoming .step-circle { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+
+.step-check {
+  width: 14px; height: 14px;
+}
+
+.sidebar-step-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 400;
+}
+.sidebar-step.upcoming .sidebar-step-label { color: rgba(255,255,255,0.3); }
+
+.sidebar-progress {
+  margin-top: auto;
+  padding-top: 32px;
+}
+.sidebar-progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+}
+.sidebar-progress-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.sidebar-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Main content */
+.assess-main {
+  padding: 64px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.q-main-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.q-main-sub {
+  font-size: 15px;
+  color: var(--text-mid);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  font-weight: 300;
+  max-width: 520px;
+}
+
+.opts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 40px;
+  max-width: 640px;
+}
+.opts-grid.single-col { grid-template-columns: 1fr; }
+
+.opt-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 20px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius);
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.opt-card:hover {
+  border-color: var(--blue-light);
+  background: #F0F7FF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(26,111,191,0.1);
+}
+.opt-card.selected {
+  border-color: var(--blue);
+  background: #EBF4FF;
+  box-shadow: 0 4px 20px rgba(26,111,191,0.15);
+}
+
+.opt-indicator {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.opt-card.selected .opt-indicator {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+.opt-indicator-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.opt-card.selected .opt-indicator-dot { opacity: 1; }
+
+.opt-body { flex: 1; }
+.opt-label { font-size: 14px; font-weight: 500; color: var(--navy); line-height: 1.4; }
+.opt-sublabel { font-size: 12px; color: var(--text-mid); margin-top: 3px; }
+
+.text-field {
+  width: 100%;
+  max-width: 520px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius);
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--navy);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 40px;
+  min-height: 100px;
+}
+.text-field:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(26,111,191,0.08);
+}
+.text-field::placeholder { color: #B0BBCB; }
+
+.nav-row {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.btn-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--text-mid);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-back:hover { border-color: #A0AEC0; color: var(--navy); }
+
+.btn-next {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px;
+  border-radius: 100px;
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s, opacity 0.2s;
+}
+.btn-next:hover:not(:disabled) { background: var(--navy-light); transform: translateX(2px); }
+.btn-next:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+.btn-next.generating { background: var(--blue); }
+
+.step-count {
+  font-size: 13px;
+  color: var(--text-light);
+  font-family: 'Space Mono', monospace;
+  margin-left: auto;
+}
+
+/* ── REPORT ─────────────────────────────── */
+#report-page { display: none; background: var(--cream); min-height: 100vh; }
+
+.report-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-dark);
+  padding: 20px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.report-nav-logo { display: flex; align-items: center; gap: 10px; }
+.report-nav-logo-mark {
+  width: 32px; height: 32px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.report-nav-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  color: var(--navy);
+}
+.report-nav-right { display: flex; gap: 12px; }
+.btn-print {
+  padding: 9px 20px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 100px;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.btn-print:hover { border-color: #A0AEC0; }
+.btn-consult {
+  padding: 10px 22px;
+  border-radius: 100px;
+  background: var(--navy);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: none; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-consult:hover { background: var(--navy-light); }
+
+.report-body { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+/* Report Header */
+.report-hero {
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  padding: 48px 52px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.report-hero::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,111,191,0.3) 0%, transparent 70%);
+  top: -200px; right: -100px;
+}
+.report-hero-content { position: relative; z-index: 1; }
+.report-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(200,169,110,0.2);
+  border: 1px solid rgba(200,169,110,0.3);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 20px;
+}
+.report-biz-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.report-meta-row {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 32px;
+}
+.report-meta-item { display: flex; align-items: center; gap: 6px; }
+
+.report-score-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.report-score-box {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+.report-score-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--accent-light);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.report-score-lbl { font-size: 12px; color: rgba(255,255,255,0.45); }
+.report-urgency-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.urg-high { background: #FDEAEA; color: #991B1B; }
+.urg-med { background: #FEF3E2; color: #92400E; }
+.urg-low { background: #E6F5EE; color: #1A5C3A; }
+
+/* Report Sections */
+.report-section { margin-bottom: 24px; }
+.section-card-report {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cream-dark);
+  overflow: hidden;
+}
+.section-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.section-card-title-row { display: flex; align-items: center; gap: 14px; }
+.section-icon-box {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.icon-blue { background: #EBF4FF; }
+.icon-green { background: #E6F5EE; }
+.icon-amber { background: #FEF3E2; }
+.icon-navy { background: #EBF0F7; }
+
+.section-card-title { font-size: 16px; font-weight: 600; color: var(--navy); }
+.section-card-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+.dim-score-badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.score-good-badge { background: var(--success-bg); color: var(--success); }
+.score-warn-badge { background: var(--warn-bg); color: var(--warn); }
+.score-bad-badge { background: var(--danger-bg); color: var(--danger); }
+
+.section-card-body { padding: 24px 28px; }
+
+.dim-bar-wrap { margin-bottom: 20px; }
+.dim-bar-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
+.dim-bar-track {
+  height: 6px;
+  background: var(--cream-dark);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.dim-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.bar-good { background: var(--success); }
+.bar-warn { background: #EF9F27; }
+.bar-bad { background: #E24B4A; }
+
+.finding-list { display: flex; flex-direction: column; gap: 0; }
+.finding-row {
+  display: flex; gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.finding-row:last-child { border-bottom: none; }
+.finding-indicator {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.ind-red { background: #E24B4A; }
+.ind-amber { background: #EF9F27; }
+.ind-green { background: #2D7D5A; }
+.finding-text-content { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+.finding-text-content strong { color: var(--navy); font-weight: 500; }
+
+.rec-list { display: flex; flex-direction: column; gap: 0; }
+.rec-row {
+  display: flex; gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.rec-row:last-child { border-bottom: none; }
+.rec-num-badge {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.rec-content { flex: 1; }
+.rec-title { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.rec-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+.rec-tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  background: #EBF4FF;
+  color: var(--blue);
+}
+
+/* Maturity visual */
+.maturity-visual {
+  display: flex; gap: 6px;
+  margin: 20px 0;
+}
+.maturity-block {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--cream-dark);
+  transition: background 0.4s;
+}
+.maturity-block.active { background: var(--blue); }
+.maturity-labels {
+  display: flex; justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 8px;
+}
+
+/* CTA Section */
+.report-cta {
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  padding: 52px;
+  text-align: center;
+  margin-top: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.report-cta::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,169,110,0.15) 0%, transparent 70%);
+  top: -150px; right: -100px;
+}
+.report-cta-content { position: relative; z-index: 1; }
+.cta-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 16px;
+}
+.cta-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.cta-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  max-width: 500px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-cta-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 8px 32px rgba(200,169,110,0.35);
+}
+.btn-cta-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+.btn-cta-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 28px;
+  border-radius: 100px;
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-cta-secondary:hover { border-color: rgba(255,255,255,0.5); color: white; }
+
+.report-footer {
+  text-align: center;
+  padding: 40px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* ── MODAL ──────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(11,31,58,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 48px;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; color: var(--text-light);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.modal-close:hover { background: var(--cream); }
+.modal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.modal-sub { font-size: 14px; color: var(--text-mid); margin-bottom: 28px; line-height: 1.6; }
+.form-field { margin-bottom: 16px; }
+.form-label { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--blue); }
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--cream-dark);
+  border-radius: var(--radius);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form-select:focus { border-color: var(--blue); }
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  border-radius: 100px;
+  background: var(--navy);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border: none; cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.btn-submit:hover { background: var(--navy-light); }
+.submit-success {
+  text-align: center;
+  padding: 20px 0;
+}
+.success-icon {
+  width: 56px; height: 56px;
+  background: var(--success-bg);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 24px;
+}
+.success-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+.success-sub { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .land-nav { padding: 20px 24px; }
+  .land-hero { padding: 40px 24px 60px; }
+  .hero-stats { padding: 0 24px 40px; gap: 0; }
+  .stat-item { padding: 0 20px; }
+
+  .assess-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .assess-main { padding: 32px 24px; min-height: auto; }
+  .opts-grid { grid-template-columns: 1fr; }
+
+  .report-nav { padding: 16px 20px; }
+  .report-body { padding: 32px 20px; }
+  .report-hero { padding: 32px 28px; }
+  .report-score-row { grid-template-columns: 1fr; }
+  .report-cta { padding: 36px 28px; }
+  .modal-box { padding: 32px 24px; }
+}
+
+@media print {
+  .report-nav, .report-cta, .btn-print, .btn-consult { display: none !important; }
+  #report-page { display: block !important; }
+  #landing, #assessment-page { display: none !important; }
+  .report-body { padding: 20px; }
+}
+
+/* ── CONSENT MODAL ───────────────────────────────── */
+.consent-overlay {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(11,31,58,0.82);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.consent-overlay.open { display: flex; }
+.consent-box {
+  background: var(--white);
+  border-radius: 24px;
+  width: 100%; max-width: 600px;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  position: relative;
+  animation: modalIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(11,31,58,0.35);
+}
+.consent-header {
+  background: var(--navy);
+  padding: 28px 36px 24px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.consent-header::before {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,111,191,0.25) 0%, transparent 70%);
+  top: -120px; right: -60px;
+}
+.consent-header-inner { position: relative; z-index: 1; }
+.consent-shield {
+  width: 48px; height: 48px;
+  background: rgba(200,169,110,0.15);
+  border: 1.5px solid rgba(200,169,110,0.35);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.consent-header-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: var(--white);
+  line-height: 1.25; margin-bottom: 6px;
+}
+.consent-header-sub {
+  font-size: 13px; color: rgba(255,255,255,0.55);
+  line-height: 1.6; font-weight: 300;
+}
+.consent-body {
+  padding: 28px 36px;
+  overflow-y: auto; flex: 1;
+}
+.consent-body::-webkit-scrollbar { width: 4px; }
+.consent-body::-webkit-scrollbar-track { background: var(--cream); }
+.consent-body::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 2px; }
+
+.consent-highlights {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 24px;
+}
+.consent-highlight {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+.consent-highlight.green  { background: #F0FDF4; border-color: #BBF7D0; }
+.consent-highlight.blue   { background: #EFF6FF; border-color: #BFDBFE; }
+.consent-highlight.amber  { background: #FFFBEB; border-color: #FDE68A; }
+.consent-highlight.purple { background: #FAF5FF; border-color: #E9D5FF; }
+.consent-highlight-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.consent-highlight-text { flex: 1; }
+.consent-highlight-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.consent-highlight-desc  { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
+
+.consent-divider {
+  height: 1px; background: var(--cream-dark); margin: 20px 0;
+}
+.consent-legal-title {
+  font-size: 11px; font-family: 'Space Mono', monospace;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-light); margin-bottom: 12px;
+}
+.consent-legal-text {
+  font-size: 12px; color: var(--text-mid); line-height: 1.7;
+  margin-bottom: 10px;
+}
+.consent-legal-text a {
+  color: var(--blue); text-decoration: underline; text-underline-offset: 2px;
+  cursor: pointer;
+}
+.consent-legal-text a:hover { color: var(--navy); }
+
+.consent-checks { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+.consent-check-row {
+  display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+}
+.consent-checkbox {
+  width: 20px; height: 20px; border-radius: 5px;
+  border: 2px solid var(--cream-dark);
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer; background: white;
+}
+.consent-checkbox.checked { border-color: var(--blue); background: var(--blue); }
+.consent-checkbox-tick { color: white; font-size: 12px; display: none; }
+.consent-checkbox.checked .consent-checkbox-tick { display: block; }
+.consent-check-label {
+  font-size: 13px; color: var(--text-mid); line-height: 1.55;
+}
+.consent-check-label strong { color: var(--navy); }
+
+.consent-footer {
+  padding: 20px 36px 28px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--cream-dark);
+  background: #FAFAF8;
+}
+.consent-btn-row {
+  display: flex; gap: 10px; margin-bottom: 12px;
+}
+.btn-consent-decline {
+  flex: 1; padding: 13px;
+  border-radius: 100px;
+  border: 1.5px solid var(--cream-dark);
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; color: var(--text-mid);
+  cursor: pointer; transition: border-color 0.15s, color 0.15s;
+}
+.btn-consent-decline:hover { border-color: #A0AEC0; color: var(--navy); }
+.btn-consent-agree {
+  flex: 2; padding: 13px;
+  border-radius: 100px;
+  border: none;
+  background: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600; color: white;
+  cursor: pointer; transition: background 0.2s, opacity 0.2s;
+}
+.btn-consent-agree:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-consent-agree:not(:disabled):hover { background: var(--navy-light); }
+.consent-disclaimer {
+  font-size: 11px; color: var(--text-light);
+  text-align: center; line-height: 1.6;
+}
+
+/* Policy modal */
+.policy-overlay {
+  display: none; position: fixed; inset: 0; z-index: 3000;
+  background: rgba(11,31,58,0.7);
+  backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.policy-overlay.open { display: flex; }
+.policy-box {
+  background: white; border-radius: 20px;
+  width: 100%; max-width: 660px;
+  max-height: 88vh; overflow: hidden;
+  display: flex; flex-direction: column;
+  animation: modalIn 0.3s ease;
+  box-shadow: 0 24px 64px rgba(11,31,58,0.3);
+}
+.policy-header {
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid var(--cream-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.policy-header-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--navy);
+}
+.policy-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: none; background: var(--cream);
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; color: var(--text-mid);
+}
+.policy-close:hover { background: var(--cream-dark); }
+.policy-tabs {
+  display: flex; border-bottom: 1px solid var(--cream-dark);
+  flex-shrink: 0;
+}
+.policy-tab {
+  padding: 12px 24px;
+  font-size: 13px; font-weight: 500;
+  color: var(--text-light); cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  background: none; border-left: none; border-right: none; border-top: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.policy-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.policy-content {
+  padding: 28px 32px; overflow-y: auto; flex: 1;
+}
+.policy-content::-webkit-scrollbar { width: 4px; }
+.policy-content::-webkit-scrollbar-track { background: var(--cream); }
+.policy-content::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 2px; }
+.policy-section { margin-bottom: 24px; }
+.policy-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: var(--navy); margin-bottom: 6px;
+}
+.policy-h2 {
+  font-size: 13px; font-weight: 600; color: var(--navy);
+  margin-bottom: 6px; margin-top: 16px;
+}
+.policy-p {
+  font-size: 12.5px; color: var(--text-mid);
+  line-height: 1.75; margin-bottom: 8px;
+}
+.policy-ul {
+  padding-left: 18px; margin-bottom: 8px;
+}
+.policy-ul li {
+  font-size: 12.5px; color: var(--text-mid);
+  line-height: 1.75; margin-bottom: 4px;
+}
+.policy-meta {
+  font-size: 11px; color: var(--text-light);
+  font-family: 'Space Mono', monospace;
+  margin-bottom: 20px;
+}
+.policy-footer {
+  padding: 16px 32px; border-top: 1px solid var(--cream-dark);
+  flex-shrink: 0; background: #FAFAF8;
+  display: flex; justify-content: flex-end;
+}
+.btn-policy-close {
+  padding: 10px 28px; border-radius: 100px;
+  background: var(--navy); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-weight: 500; border: none; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-policy-close:hover { background: var(--navy-light); }
+
+
+/* ── WORD-STYLE REPORT ──────────────────────────────── */
+.word-report {
+  background: white;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+.word-page {
+  background: white;
+  padding: 64px 80px;
+  margin-bottom: 2px;
+  border-bottom: 3px solid #E8E3DC;
+  position: relative;
+}
+.word-page:last-child { border-bottom: none; }
+
+/* Cover */
+.word-cover {
+  min-height: 900px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+.word-cover-top {
+  background: var(--navy);
+  padding: 52px 64px 48px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.word-cover-top::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,111,191,0.2) 0%, transparent 70%);
+  top: -180px; right: -100px; pointer-events: none;
+}
+.word-cover-brand {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 52px; position: relative; z-index: 1;
+}
+.word-cover-brand-mark {
+  width: 40px; height: 40px; background: var(--accent);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.word-cover-brand-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: white; letter-spacing: 0.3px;
+}
+.word-cover-tag {
+  font-size: 10px; font-family: 'Space Mono', monospace;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+  position: relative; z-index: 1;
+}
+.word-cover-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px; color: white;
+  line-height: 1.15; margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.word-cover-biz {
+  font-size: 16px; color: rgba(255,255,255,0.55);
+  font-weight: 300; position: relative; z-index: 1;
+}
+.word-cover-body {
+  padding: 48px 64px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.word-cover-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid #DDD;
+  margin-bottom: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.word-cover-meta-cell {
+  padding: 14px 18px;
+  border-right: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+.word-cover-meta-cell:nth-child(even) { border-right: none; }
+.word-cover-meta-cell:nth-last-child(-n+2) { border-bottom: none; }
+.word-meta-label {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1px; color: #888; margin-bottom: 3px;
+  font-weight: 600;
+}
+.word-meta-value {
+  font-size: 14px; color: var(--navy); font-weight: 500;
+}
+.word-cover-scores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.word-cover-score-box {
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  padding: 18px 16px;
+  text-align: center;
+  border-top: 3px solid var(--navy);
+}
+.word-cover-score-box:first-child { border-top-color: var(--accent); }
+.word-cover-score-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px; color: var(--navy);
+  margin-bottom: 4px; line-height: 1;
+}
+.word-cover-score-val.accent { color: var(--accent); }
+.word-cover-score-lbl {
+  font-size: 11px; color: #888;
+}
+.word-cover-prepared {
+  margin-top: auto;
+  padding-top: 28px;
+  border-top: 1px solid #E8E3DC;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.word-prepared-by { font-size: 12px; color: #888; }
+.word-prepared-name { font-size: 13px; font-weight: 600; color: var(--navy); margin-top: 2px; }
+.word-confidential {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #AAA;
+}
+
+/* Body pages */
+.word-chapter-label {
+  font-size: 9px; font-family: 'Space Mono', monospace;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px;
+}
+.word-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; color: var(--navy);
+  margin-bottom: 4px; line-height: 1.2;
+}
+.word-h1-rule {
+  height: 2px;
+  background: linear-gradient(to right, var(--navy), transparent);
+  margin-bottom: 24px; margin-top: 10px;
+}
+.word-h2 {
+  font-size: 13px; font-weight: 600;
+  color: var(--navy); margin-top: 22px; margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  font-family: 'Space Mono', monospace;
+}
+.word-body {
+  font-size: 13.5px; color: #3D4A5C;
+  line-height: 1.85; margin-bottom: 14px;
+  text-align: justify;
+}
+.word-body strong { color: var(--navy); font-weight: 600; }
+
+/* Dimension rows */
+.word-dim-row {
+  border: 1px solid #E2DDD6;
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  page-break-inside: avoid;
+}
+.word-dim-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.word-dim-title {
+  font-size: 14px; font-weight: 600; color: var(--navy);
+}
+.word-dim-badge {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 12px; border-radius: 100px;
+}
+.word-dim-bar-track {
+  height: 5px; background: #E8E3DC; border-radius: 3px;
+  margin-bottom: 12px; overflow: hidden;
+}
+.word-dim-bar-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.word-dim-text {
+  font-size: 13px; color: #4A5568; line-height: 1.7;
+}
+.word-dim-text strong { color: var(--navy); }
+
+/* Findings */
+.word-finding {
+  display: flex; gap: 14px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border-left: 3px solid;
+  page-break-inside: avoid;
+}
+.word-finding.red   { background: #FEF2F2; border-color: #DC2626; }
+.word-finding.amber { background: #FFFBEB; border-color: #D97706; }
+.word-finding.green { background: #F0FDF4; border-color: #16A34A; }
+.word-finding-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 3px;
+  flex-shrink: 0; width: 56px;
+}
+.word-finding.red   .word-finding-label { color: #DC2626; }
+.word-finding.amber .word-finding-label { color: #D97706; }
+.word-finding.green .word-finding-label { color: #16A34A; }
+.word-finding-text  { font-size: 13px; color: #374151; line-height: 1.65; }
+.word-finding-text strong { color: var(--navy); }
+
+/* Recommendations */
+.word-rec {
+  display: grid; grid-template-columns: 44px 1fr;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid #E2DDD6;
+  border-radius: 6px;
+  overflow: hidden;
+  page-break-inside: avoid;
+}
+.word-rec-num {
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--accent);
+}
+.word-rec-body { padding: 16px 20px; }
+.word-rec-title {
+  font-size: 14px; font-weight: 600; color: var(--navy);
+  margin-bottom: 5px;
+}
+.word-rec-desc {
+  font-size: 13px; color: #4A5568; line-height: 1.7; margin-bottom: 6px;
+}
+.word-rec-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--blue); background: #EBF4FF;
+  padding: 2px 10px; border-radius: 100px;
+}
+
+/* Maturity scale */
+.word-maturity-scale {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 4px; margin: 16px 0;
+}
+.word-maturity-cell {
+  padding: 10px 6px; text-align: center;
+  border-radius: 4px; font-size: 11px;
+  font-weight: 500; border: 1px solid #E2DDD6;
+}
+.word-maturity-cell.active {
+  background: var(--navy); color: white;
+  border-color: var(--navy);
+}
+.word-maturity-cell.passed {
+  background: #EBF4FF; color: var(--blue);
+  border-color: #BFDBFE;
+}
+.word-maturity-cell.ahead {
+  background: #F9F9F8; color: #9CA3AF;
+}
+
+/* Summary table */
+.word-summary-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px; margin-bottom: 20px;
+}
+.word-summary-table th {
+  background: var(--navy); color: white;
+  padding: 10px 14px; text-align: left;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.word-summary-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #E8E3DC;
+  color: #374151; vertical-align: top;
+}
+.word-summary-table tr:nth-child(even) td { background: #FAFAF8; }
+.word-summary-table tr:last-child td { border-bottom: none; }
+
+/* Next steps CTA */
+.word-next-steps {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 36px 40px;
+  margin-top: 32px;
+  position: relative; overflow: hidden;
+}
+.word-next-steps::before {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+  bottom: -100px; right: -60px; pointer-events: none;
+}
+.word-next-label {
+  font-size: 9px; font-family: 'Space Mono', monospace;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.word-next-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: white;
+  margin-bottom: 10px; position: relative; z-index: 1;
+}
+.word-next-body {
+  font-size: 13px; color: rgba(255,255,255,0.6);
+  line-height: 1.8; max-width: 520px;
+  margin-bottom: 24px; position: relative; z-index: 1;
+  font-weight: 300;
+}
+.word-next-contact {
+  font-size: 13px; color: var(--accent);
+  font-weight: 500; position: relative; z-index: 1;
+}
+.word-next-buttons {
+  display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── LANDING ─────────────────────────── -->
+<div id="landing">
+  <div class="land-bg">
+    <div class="land-grid"></div>
+  </div>
+
+  <nav class="land-nav">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <span class="logo-name">Tuinnov8</span>
+    </div>
+    <span class="nav-tag">Business Discovery</span>
+  </nav>
+
+  <div class="land-hero">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      Free Business Assessment
+    </div>
+    <h1 class="hero-title">
+      Discover what's<br>holding your business<br><em>back</em>
+    </h1>
+    <p class="hero-sub">
+      Answer 12 targeted questions and receive a detailed diagnostic report — identifying operational gaps, growth opportunities, and a clear digital transformation roadmap tailored to your business.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-primary-land" onclick="startAssessment()">
+        Start Free Assessment
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <button class="btn-ghost-land">
+        Takes 5 minutes
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-lbl">Assessment areas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5 min</div>
+      <div class="stat-lbl">To complete</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Free</div>
+      <div class="stat-lbl">No obligation</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ASSESSMENT ─────────────────────── -->
+<div id="assessment-page">
+  <div class="assess-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <span class="sidebar-logo-name">Tuinnov8</span>
+      </div>
+      <div class="sidebar-label">Assessment sections</div>
+      <div class="sidebar-steps" id="sidebar-steps"></div>
+      <div class="sidebar-progress">
+        <div class="sidebar-progress-label">
+          <span>Progress</span>
+          <span id="sidebar-pct">0%</span>
+        </div>
+        <div class="sidebar-progress-track">
+          <div class="sidebar-progress-fill" id="sidebar-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="assess-main" id="assess-main">
+    </main>
+  </div>
+</div>
+
+<!-- ── REPORT ─────────────────────────── -->
+<div id="report-page">
+  <nav class="report-nav">
+    <div class="report-nav-logo">
+      <div class="report-nav-logo-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <span class="report-nav-name">Tuinnov8</span>
+    </div>
+    <div class="report-nav-right">
+      <button class="btn-print" onclick="window.print()">⬇ Save as PDF</button>
+      <button class="btn-consult" style="background:var(--accent);color:var(--navy);font-weight:600" onclick="openImplModal()">⚡ Implement with Tuinnov8</button>
+      <button class="btn-consult" onclick="openModal()">Schedule Consultation</button>
+    </div>
+  </nav>
+  <div class="report-body" id="report-body"></div>
+  <div class="report-footer">
+    © 2025 Tuinnov8 · Business Innovation Discovery Report · Confidential
+  </div>
+</div>
+
+<!-- ── CONSULTATION MODAL ─────────────── -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content">
+      <h2 class="modal-title">Schedule your consultation</h2>
+      <p class="modal-sub">A Tuinnov8 consultant will review your report and contact you to arrange a deep-dive session at no cost.</p>
+      <div class="form-field">
+        <label class="form-label">Full name</label>
+        <input class="form-input" type="text" id="m-name" placeholder="Jane Mwangi">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="m-email" placeholder="jane@example.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Phone number</label>
+        <input class="form-input" type="tel" id="m-phone" placeholder="+254 7XX XXX XXX">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Preferred meeting time</label>
+        <select class="form-select" id="m-time">
+          <option value="">Select a time slot</option>
+          <option>Morning (8am – 12pm)</option>
+          <option>Afternoon (12pm – 5pm)</option>
+          <option>Flexible</option>
+        </select>
+      </div>
+      <button class="btn-submit" onclick="submitConsultation()">Request Consultation →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── HELCON MODAL ────────────────────── -->
+<div class="modal-overlay" id="impl-modal" onclick="if(event.target===this)closeImplModal()">
+  <div class="modal-box" style="max-width:520px">
+    <button class="modal-close" onclick="closeImplModal()">✕</button>
+    <div id="impl-modal-content">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:44px;height:44px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚡</div>
+        <div>
+          <h2 class="modal-title" style="margin-bottom:2px">Implement with Tuinnov8</h2>
+          <p style="font-size:13px;color:var(--text-light)">Tuinnov8 Expert Implementation Team</p>
+        </div>
+      </div>
+      <p class="modal-sub">Skip the waiting. The Tuinnov8 expert team will take your BID report, design a custom solution, and manage full implementation from day one. Tell us about your timeline and budget to get started.</p>
+      <div class="form-field">
+        <label class="form-label">Full name</label>
+        <input class="form-input" type="text" id="i-name" placeholder="Jane Mwangi">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="i-email" placeholder="jane@example.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Phone number</label>
+        <input class="form-input" type="tel" id="i-phone" placeholder="+254 7XX XXX XXX">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Implementation timeline</label>
+        <select class="form-select" id="i-timeline">
+          <option value="">Select a preferred timeline</option>
+          <option>ASAP — within 1 month</option>
+          <option>1 – 3 months</option>
+          <option>3 – 6 months</option>
+          <option>6+ months (phased rollout)</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Approximate budget range</label>
+        <select class="form-select" id="i-budget">
+          <option value="">Select a budget range</option>
+          <option>Under KES 100,000</option>
+          <option>KES 100,000 – 300,000</option>
+          <option>KES 300,000 – 700,000</option>
+          <option>KES 700,000 – 2,000,000</option>
+          <option>Over KES 2,000,000</option>
+          <option>Prefer to discuss</option>
+        </select>
+      </div>
+      <button class="btn-submit" style="background:var(--accent);color:var(--navy)" onclick="submitImpl()">Submit Implementation Request →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SECTIONS = [
+  { label: "About Your Business", icon: "🏢" },
+  { label: "Operations", icon: "⚙️" },
+  { label: "Customer Experience", icon: "👥" },
+  { label: "Data & Reporting", icon: "📊" },
+  { label: "Growth & Revenue", icon: "📈" },
+  { label: "Digital Readiness", icon: "💻" },
+  { label: "Your Goals", icon: "🎯" },
+];
+
+const STEPS = [
+  { id:"bizName", section:0, type:"text", q:"What is your business name?", sub:"This will appear on your personalised report.", ph:"e.g. Savanna Logistics Ltd", key:"bizName" },
+  { id:"sector", section:0, type:"options", q:"What sector does your business operate in?", sub:"Select the option that best describes your primary industry.", key:"sector", cols:2,
+    opts:[
+      {l:"Healthcare / Clinic", s:"Hospitals, clinics, pharmacies, wellness"},
+      {l:"Retail / FMCG", s:"Shops, supermarkets, consumer goods"},
+      {l:"Food & Beverage", s:"Restaurants, cafés, catering, delivery"},
+      {l:"Education", s:"Schools, colleges, tutoring, training"},
+      {l:"Logistics / Transport", s:"Freight, delivery, fleet operations"},
+      {l:"Finance / SACCO", s:"Savings, credit, microfinance"},
+      {l:"Hospitality", s:"Hotels, guesthouses, events"},
+      {l:"Professional Services", s:"Consulting, legal, accounting, agencies"},
+    ]},
+  { id:"bizDesc", section:0, type:"text", q:"Tell us about your business in a few sentences.", sub:"Describe what you do, who you serve, and what makes your business unique. This helps us personalise your report.", ph:"e.g. We are a mid-sized logistics company based in Nairobi, serving FMCG distributors across East Africa. We specialise in last-mile delivery and currently manage a fleet of 30 vehicles...", key:"bizDesc" },
+  { id:"size", section:0, type:"options", q:"How large is your team?", sub:"Including full-time, part-time, and regular contractors.", key:"size", cols:1,
+    opts:[
+      {l:"Solo / Founder only"},{l:"2 – 10 employees"},{l:"11 – 50 employees"},{l:"51 – 200 employees"},{l:"200+ employees"},
+    ]},
+  { id:"ops", section:1, type:"options", q:"How would you describe your current day-to-day operations?", sub:"Be honest — this is the foundation of your diagnostic.", key:"ops", cols:1,
+    opts:[
+      {l:"Mostly paper-based", s:"Records, approvals, and reports are manual"},
+      {l:"Basic spreadsheets & email", s:"Some digital tools, but nothing integrated"},
+      {l:"A mix of disconnected systems", s:"Software in use, but the tools don't talk to each other"},
+      {l:"Well-integrated digital systems", s:"Most processes run through connected tools"},
+    ]},
+  { id:"bottleneck", section:1, type:"options", q:"Where does your business lose the most time or money?", sub:"Select the area that causes the most day-to-day friction.", key:"bottleneck", cols:2,
+    opts:[
+      {l:"Manual data entry & paperwork"},{l:"Delayed approvals & slow decisions"},
+      {l:"Poor customer follow-up"},{l:"Inventory losses or stockouts"},
+      {l:"Billing & payment tracking"},{l:"Staff coordination & scheduling"},
+    ]},
+  { id:"cx", section:2, type:"options", q:"What is your biggest customer experience challenge?", sub:"Select the issue customers raise or that you notice most.", key:"cx", cols:1,
+    opts:[
+      {l:"Long wait times or slow service"},{l:"Difficulty booking or placing orders"},
+      {l:"Poor follow-up after purchase"},{l:"Inconsistent service quality"},
+      {l:"No online or self-service channel"},{l:"Customer experience is generally good"},
+    ]},
+  { id:"data", section:3, type:"options", q:"How do you currently track business performance?", sub:"Think about how you know whether things are going well or not.", key:"data", cols:1,
+    opts:[
+      {l:"Gut feel and experience"},{l:"Periodic manual reports from staff"},
+      {l:"Spreadsheets we update ourselves"},{l:"A software system with some reporting"},
+      {l:"A live dashboard with real-time data"},
+    ]},
+  { id:"revenue", section:4, type:"options", q:"What is currently limiting your revenue growth?", sub:"Select the most significant barrier to growing your income.", key:"revenue", cols:1,
+    opts:[
+      {l:"Can't serve more customers with current team"},{l:"No online sales or booking channel"},
+      {l:"Poor customer retention & marketing"},{l:"Cash flow or pricing issues"},
+      {l:"Haven't identified the right growth lever yet"},
+    ]},
+  { id:"digital", section:5, type:"options", q:"What is your current relationship with technology?", sub:"Your honest answer leads to the most useful recommendations.", key:"digital", cols:1,
+    opts:[
+      {l:"We avoid it — too complex or costly"},{l:"We use basic tools but struggle to adopt more"},
+      {l:"We're open but need guidance"},{l:"We actively seek digital solutions"},
+      {l:"We're already quite digitally advanced"},
+    ]},
+  { id:"infra", section:5, type:"options", q:"How is your internet and device infrastructure?", sub:"This determines which solutions are immediately viable for your business.", key:"infra", cols:1,
+    opts:[
+      {l:"No reliable internet at our location"},{l:"Slow or inconsistent connection"},
+      {l:"Reliable internet, basic devices"},{l:"Good internet, multiple computers/tablets"},
+      {l:"Excellent — fibre, multiple modern devices"},
+    ]},
+  { id:"priority", section:6, type:"options", q:"What is your most important goal for the next 12 months?", sub:"Select the outcome that matters most to you and your business.", key:"priority", cols:2,
+    opts:[
+      {l:"Reduce operational costs", s:"Do more with less"},
+      {l:"Grow revenue", s:"Reach more customers, increase sales"},
+      {l:"Improve customer experience", s:"Retention, satisfaction, loyalty"},
+      {l:"Better business visibility", s:"Data, reporting, control"},
+      {l:"Scale and expand", s:"New locations, services, or markets"},
+    ]},
+  { id:"extra", section:6, type:"text", q:"Anything else you'd like us to know?", sub:"Optional — share any specific challenges or context that would help us give you a more accurate report.", ph:"e.g. We recently expanded to a second location and are struggling to coordinate operations...", key:"extra", optional:true },
+];
+
+let current = 0;
+let answers = {};
+
+function g(id){ return document.getElementById(id); }
+
+function startAssessment(){
+  // Show consent modal before entering assessment
+  g('consent-overlay').classList.add('open');
+}
+
+function agreeConsent(){
+  g('consent-overlay').classList.remove('open');
+  g('landing').style.display = 'none';
+  g('assessment-page').style.display = 'block';
+  renderSidebar();
+  renderStep();
+}
+
+function declineConsent(){
+  g('consent-overlay').classList.remove('open');
+}
+
+function toggleCheck(id){
+  const box = g(id);
+  box.classList.toggle('checked');
+  g('btn-agree').disabled = !box.classList.contains('checked');
+}
+
+function openPolicy(tab){
+  g('policy-overlay').classList.add('open');
+  switchTab(tab);
+}
+
+function closePolicy(){
+  g('policy-overlay').classList.remove('open');
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+  g('tab-' + tab).classList.add('active');
+  g('policy-modal-title').textContent = tab === 'privacy' ? 'Privacy Policy' : 'Terms of Service';
+  g('policy-content').innerHTML = tab === 'privacy' ? PRIVACY_POLICY_HTML : TERMS_HTML;
+}
+
+const PRIVACY_POLICY_HTML = `
+  <div class="policy-section">
+    <div class="policy-h1">Privacy Policy</div>
+    <div class="policy-meta">Tuinnov8 · Last updated: January 2025 · Version 1.0</div>
+    <p class="policy-p">
+      This Privacy Policy explains how Tuinnov8 ("we", "us", or "our") collects, uses, stores, and protects information provided through the Business Innovation Discovery (BID) Assessment Tool. We are committed to safeguarding your privacy and operating in accordance with internationally recognised data protection standards, including the principles of the <strong>General Data Protection Regulation (GDPR)</strong>, the <strong>ISO/IEC 27001</strong> information security framework, and applicable data protection legislation in your jurisdiction.
+    </p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">1. Data Controller</div>
+    <p class="policy-p">Tuinnov8 is the data controller responsible for the personal and business information collected through this tool. For all privacy-related enquiries, contact us at: <strong>privacy@tuinnov8.com</strong></p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">2. What Information We Collect</div>
+    <p class="policy-p">This assessment collects <strong>business operational information only</strong>. We do not collect sensitive personal data such as national ID numbers, financial account details, health information, or biometric data. Specifically, we collect:</p>
+    <ul class="policy-ul">
+      <li>Business name and industry sector</li>
+      <li>Approximate team size</li>
+      <li>Operational maturity indicators (how your business manages processes, data, and technology)</li>
+      <li>Self-reported business goals and challenges</li>
+      <li>Contact information <em>only if</em> you voluntarily submit a consultation or implementation request</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">3. Legal Basis for Processing</div>
+    <p class="policy-p">We process your information on the basis of <strong>freely given, specific, informed, and unambiguous consent</strong>, consistent with internationally recognised data protection principles including those established under the GDPR. You may withdraw your consent at any time by contacting privacy@tuinnov8.com. Withdrawal of consent does not affect the lawfulness of processing carried out prior to withdrawal.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">4. How We Use Your Information</div>
+    <p class="policy-p">Information collected is used solely for the following purposes:</p>
+    <ul class="policy-ul">
+      <li>To generate your personalised Business Innovation Discovery Report</li>
+      <li>To facilitate a consultation session if you request one</li>
+      <li>To improve the quality and relevance of our assessment framework (in anonymised, aggregated form only)</li>
+      <li>To respond to enquiries you submit to us</li>
+    </ul>
+    <p class="policy-p">We do not use your information for automated decision-making that produces legal or similarly significant effects.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">5. Data Sharing &amp; Third Parties</div>
+    <p class="policy-p">We <strong>do not sell, rent, or trade</strong> your information to third parties. We do not share your data with advertising networks or data brokers. We may share information only in the following limited circumstances:</p>
+    <ul class="policy-ul">
+      <li>With trusted technology partners who assist in operating our platform, bound by strict confidentiality obligations</li>
+      <li>Where required by law, court order, or regulatory authority</li>
+      <li>With your explicit consent for a specific purpose</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">6. Data Retention</div>
+    <p class="policy-p">Assessment data is retained for a maximum of <strong>24 months</strong> from the date of submission, after which it is securely deleted. If you submit a consultation request, associated contact information is retained for the duration of our business relationship and for a period of 36 months thereafter, in accordance with applicable law.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">7. Data Security</div>
+    <p class="policy-p">We implement appropriate technical and organisational measures to protect your information, including encryption in transit (TLS/HTTPS), access controls limiting data access to authorised personnel only, and regular security reviews. While we take all reasonable precautions, no method of internet transmission is 100% secure.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">8. Your Rights</div>
+    <p class="policy-p">In accordance with internationally recognised data protection principles, you have the following rights regarding your information:</p>
+    <ul class="policy-ul">
+      <li><strong>Access</strong> the personal information we hold about you</li>
+      <li><strong>Rectify</strong> any inaccurate or incomplete information</li>
+      <li><strong>Erasure</strong> of your information ("right to be forgotten")</li>
+      <li><strong>Restrict</strong> or object to processing of your information</li>
+      <li><strong>Data portability</strong> — receive your data in a structured, machine-readable format</li>
+      <li><strong>Withdraw consent</strong> at any time without detriment</li>
+    </ul>
+    <p class="policy-p">To exercise any of these rights, contact us at <strong>privacy@tuinnov8.com</strong>. We will respond within 21 days.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">9. Cookies &amp; Tracking</div>
+    <p class="policy-p">This tool uses session-based functionality only. We do not use advertising cookies, cross-site tracking pixels, or third-party analytics that identify individual users.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">10. Changes to This Policy</div>
+    <p class="policy-p">We may update this Privacy Policy from time to time. Material changes will be communicated via the tool interface. Continued use of the tool following such notification constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">11. Contact &amp; Complaints</div>
+    <p class="policy-p">For privacy concerns or complaints, contact: <strong>privacy@tuinnov8.com</strong>. If you are unsatisfied with our response, you have the right to escalate your complaint to the relevant data protection supervisory authority in your jurisdiction.</p>
+  </div>
+`;
+
+const TERMS_HTML = `
+  <div class="policy-section">
+    <div class="policy-h1">Terms of Service</div>
+    <div class="policy-meta">Tuinnov8 · Last updated: January 2025 · Version 1.0</div>
+    <p class="policy-p">
+      These Terms of Service ("Terms") govern your access to and use of the Tuinnov8 Business Innovation Discovery (BID) Assessment Tool ("the Tool"). By accessing or using the Tool, you agree to be bound by these Terms. If you do not agree, you must not use the Tool.
+    </p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">1. About the Tool</div>
+    <p class="policy-p">The BID Assessment Tool is a diagnostic service provided by Tuinnov8 to help businesses understand their operational maturity, identify areas for improvement, and explore digital transformation opportunities. The Tool generates a report based on the information you input and is intended for informational and advisory purposes only.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">2. Eligibility &amp; Authority</div>
+    <p class="policy-p">By using the Tool, you represent and warrant that:</p>
+    <ul class="policy-ul">
+      <li>You are at least 18 years of age</li>
+      <li>You are authorised to represent the organisation on whose behalf you are completing the assessment</li>
+      <li>The information you provide is accurate, current, and complete to the best of your knowledge</li>
+      <li>You are not using the Tool for any unlawful purpose</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">3. Nature of the Assessment Report</div>
+    <p class="policy-p">The report generated by this Tool is based solely on the responses you provide and automated scoring logic. It is intended as a <strong>starting point for discussion</strong>, not a definitive business audit. Tuinnov8 makes no warranty that the report is complete, error-free, or suitable for any specific business decision without further professional consultation.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">4. Acceptable Use</div>
+    <p class="policy-p">You agree not to:</p>
+    <ul class="policy-ul">
+      <li>Use the Tool to submit false, misleading, or fraudulent information</li>
+      <li>Attempt to reverse-engineer, scrape, or extract the Tool's underlying logic or data</li>
+      <li>Use the Tool in a way that infringes the rights of third parties</li>
+      <li>Transmit malicious code or attempt to disrupt the Tool's operation</li>
+      <li>Reproduce or distribute reports generated for organisations you do not represent</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">5. Intellectual Property</div>
+    <p class="policy-p">All content, design, methodology, scoring logic, and software comprising the BID Assessment Tool are the intellectual property of Tuinnov8 and are protected by applicable copyright, trademark, and intellectual property laws. The report generated for your organisation is provided for your internal use only and may not be commercially reproduced or distributed without written permission from Tuinnov8.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">6. Consultation Services</div>
+    <p class="policy-p">Submission of a consultation or implementation request via this Tool does not create a binding contract between you and Tuinnov8. Any engagement for professional services will be subject to a separate written agreement. Tuinnov8 reserves the right to decline any consultation request at its discretion.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">7. Limitation of Liability</div>
+    <p class="policy-p">To the fullest extent permitted by applicable law, Tuinnov8 shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or reliance on the Tool or the report it generates. Our aggregate liability, if any, shall not exceed KES 10,000 or the amount you paid for our services, whichever is greater.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">8. Disclaimer of Warranties</div>
+    <p class="policy-p">The Tool is provided on an "as is" and "as available" basis without warranties of any kind, express or implied. Tuinnov8 does not warrant that the Tool will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">9. Governing Law</div>
+    <p class="policy-p">These Terms are governed by and construed in accordance with applicable law in the jurisdiction in which Tuinnov8 operates. Any disputes arising from these Terms or your use of the Tool shall be resolved through good-faith negotiation in the first instance, and thereafter through appropriate legal proceedings in the competent jurisdiction.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">10. Modifications</div>
+    <p class="policy-p">Tuinnov8 reserves the right to modify these Terms at any time. Continued use of the Tool after modifications constitutes acceptance of the revised Terms. We will make reasonable efforts to notify users of material changes through the Tool interface.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-h2">11. Contact</div>
+    <p class="policy-p">For any queries regarding these Terms, contact us at: <strong>legal@tuinnov8.com</strong></p>
+  </div>
+`;
+
+function renderSidebar(){
+  const container = g('sidebar-steps');
+  container.innerHTML = SECTIONS.map((s, i) => {
+    const stepsBefore = STEPS.filter(st => st.section < i).length;
+    const stepsDone = STEPS.filter(st => st.section === i && answers[st.key] !== undefined && answers[st.key] !== '').length;
+    const stepsInSection = STEPS.filter(st => st.section === i).length;
+    const currentSection = STEPS[current].section;
+
+    let cls = 'upcoming';
+    if(i === currentSection) cls = 'active';
+    else if(i < currentSection) cls = 'done';
+
+    const checkmark = i < currentSection
+      ? `<svg class="step-check" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="rgba(255,255,255,0.2)"/><polyline points="4.5 8.5 6.5 10.5 11.5 5.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      : `<div class="step-circle">${i+1}</div>`;
+
+    return `<div class="sidebar-step ${cls}">
+      ${checkmark}
+      <span class="sidebar-step-label">${s.label}</span>
+    </div>`;
+  }).join('');
+
+  const pct = Math.round((current / STEPS.length) * 100);
+  g('sidebar-fill').style.width = pct + '%';
+  g('sidebar-pct').textContent = pct + '%';
+}
+
+function renderStep(){
+  const step = STEPS[current];
+  const section = SECTIONS[step.section];
+  let html = '';
+
+  html += `<div class="section-eyebrow">${section.icon} ${section.label}</div>`;
+  html += `<h2 class="q-main-title">${step.q}</h2>`;
+  if(step.sub) html += `<p class="q-main-sub">${step.sub}</p>`;
+
+  if(step.type === 'options'){
+    const gridClass = step.cols === 1 ? 'opts-grid single-col' : 'opts-grid';
+    html += `<div class="${gridClass}">`;
+    step.opts.forEach(o => {
+      const label = typeof o === 'string' ? o : o.l;
+      const sub = typeof o === 'object' && o.s ? o.s : '';
+      const sel = answers[step.key] === label ? 'selected' : '';
+      html += `<div class="opt-card ${sel}" onclick="selectOpt(this, '${label.replace(/'/g,"\\'")}', '${step.key}')">
+        <div class="opt-indicator"><div class="opt-indicator-dot"></div></div>
+        <div class="opt-body">
+          <div class="opt-label">${label}</div>
+          ${sub ? `<div class="opt-sublabel">${sub}</div>` : ''}
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<textarea class="text-field" id="txt-inp" placeholder="${step.ph||''}">${answers[step.key]||''}</textarea>`;
+  }
+
+  html += `<div class="nav-row">
+    ${current > 0 ? `<button class="btn-back" onclick="prevStep()">← Back</button>` : '<span></span>'}
+    <button class="btn-next ${current===STEPS.length-1?'generating':''}" id="btn-next" onclick="nextStep()" ${canProceed()?'':'disabled'}>
+      ${current === STEPS.length-1 ? 'Generate My Report →' : 'Continue →'}
+    </button>
+    <span class="step-count">${current+1} / ${STEPS.length}</span>
+  </div>`;
+
+  const main = g('assess-main');
+  main.style.opacity = '0';
+  main.style.transform = 'translateY(12px)';
+  main.innerHTML = html;
+  requestAnimationFrame(()=>{
+    main.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    main.style.opacity = '1';
+    main.style.transform = 'translateY(0)';
+  });
+
+  if(step.type === 'text'){
+    const inp = g('txt-inp');
+    inp.addEventListener('input', () => {
+      answers[step.key] = inp.value;
+      g('btn-next').disabled = !canProceed();
+    });
+  }
+
+  renderSidebar();
+}
+
+function canProceed(){
+  const step = STEPS[current];
+  if(step.optional) return true;
+  if(step.type === 'text') return !!(answers[step.key] && answers[step.key].trim());
+  return !!answers[step.key];
+}
+
+function selectOpt(el, val, key){
+  document.querySelectorAll('.opt-card').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = val;
+  g('btn-next').disabled = false;
+}
+
+function nextStep(){
+  if(current === STEPS.length - 1){ buildReport(); return; }
+  current++;
+  renderStep();
+}
+
+function prevStep(){
+  if(current > 0){ current--; renderStep(); }
+}
+
+// ── SCORING ──────────────────────────────
+function score(){
+  const a = answers;
+  const opsMap = {"Mostly paper-based":5,"Basic spreadsheets & email":28,"A mix of disconnected systems":55,"Well-integrated digital systems":88};
+  const dataMap = {"Gut feel and experience":5,"Periodic manual reports from staff":22,"Spreadsheets we update ourselves":42,"A software system with some reporting":68,"A live dashboard with real-time data":95};
+  const digMap = {"We avoid it — too complex or costly":5,"We use basic tools but struggle to adopt more":28,"We're open but need guidance":52,"We actively seek digital solutions":76,"We're already quite digitally advanced":94};
+  const infraMap = {"No reliable internet at our location":5,"Slow or inconsistent connection":25,"Reliable internet, basic devices":55,"Good internet, multiple computers/tablets":78,"Excellent — fibre, multiple modern devices":96};
+  const cxMap = {"Long wait times or slow service":15,"Difficulty booking or placing orders":20,"Poor follow-up after purchase":25,"Inconsistent service quality":30,"No online or self-service channel":35,"Customer experience is generally good":82};
+
+  return {
+    ops: opsMap[a.ops] || 30,
+    data: dataMap[a.data] || 30,
+    digital: digMap[a.digital] || 30,
+    infra: infraMap[a.infra] || 30,
+    cx: cxMap[a.cx] || 50,
+  };
+}
+
+function maturity(ops, digital){
+  const avg = (ops + digital) / 2;
+  if(avg < 20) return {level:1, label:"Manual Operations"};
+  if(avg < 40) return {level:2, label:"Basic Digital Tools"};
+  if(avg < 60) return {level:3, label:"Partial Integration"};
+  if(avg < 80) return {level:4, label:"Advanced Digital"};
+  return {level:5, label:"Fully Integrated"};
+}
+
+function urgency(scores){
+  const avg = Object.values(scores).reduce((a,b)=>a+b,0) / Object.values(scores).length;
+  if(avg < 38) return {label:"High Priority", cls:"urg-high"};
+  if(avg < 64) return {label:"Moderate Priority", cls:"urg-med"};
+  return {label:"Well Positioned", cls:"urg-low"};
+}
+
+function dimBadge(v){
+  if(v >= 68) return {cls:"score-good-badge", bar:"bar-good"};
+  if(v >= 42) return {cls:"score-warn-badge", bar:"bar-warn"};
+  return {cls:"score-bad-badge", bar:"bar-bad"};
+}
+
+function getSectorRec(sector){
+  const map = {
+    "Healthcare / Clinic":{t:"Patient & Service Delivery Optimisation",d:"There is clear opportunity to improve how appointments are managed, records are maintained, and patients are communicated with. A structured review of your service delivery workflow will identify the highest-impact areas for improvement — whether that involves scheduling, records, or patient communication channels.",tag:"Service Quality"},
+    "Retail / FMCG":{t:"Stock, Sales & Customer Intelligence",d:"Retail operations benefit significantly from improved visibility across inventory, sales patterns, and customer behaviour. A detailed process review will identify where the greatest inefficiencies and revenue leakage occur and what intervention is most appropriate for your scale.",tag:"Revenue"},
+    "Food & Beverage":{t:"Order Flow & Customer Experience",d:"Businesses in this sector often face pressure on speed, accuracy, and customer satisfaction simultaneously. A discovery session will map your current order and service flow to identify the specific friction points and opportunities most relevant to your operation.",tag:"Throughput"},
+    "Education":{t:"Communication, Records & Stakeholder Engagement",d:"Educational institutions typically manage complex communication across students, parents, and staff while maintaining records and tracking fees. A structured review will clarify where manual processes are creating the most burden and where improvement would have the greatest impact.",tag:"Engagement"},
+    "Logistics / Transport":{t:"Operations Visibility & Fleet Coordination",d:"Logistics businesses face constant pressure on cost, reliability, and real-time coordination. A process review will identify where visibility gaps are costing most — whether in fleet management, delivery confirmation, client communication, or route planning.",tag:"Efficiency"},
+    "Finance / SACCO":{t:"Member Services & Operational Transparency",d:"Financial institutions and cooperatives benefit from improved member self-service, clearer reporting, and more reliable record-keeping. A discovery session will identify the areas where manual processes create the greatest compliance, trust, or efficiency risk.",tag:"Compliance"},
+    "Hospitality":{t:"Guest Experience & Revenue Management",d:"Hospitality operations depend on seamless coordination across bookings, guest communication, and internal team management. A review of your current workflow will reveal where the most significant revenue and experience gaps sit and what would deliver the fastest improvement.",tag:"Revenue"},
+    "Professional Services":{t:"Client Delivery & Practice Management",d:"Service firms often struggle with the gap between the quality of their expertise and the efficiency of how they manage client relationships, projects, and billing. A process review will surface the specific operational bottlenecks most affecting delivery quality and cash flow.",tag:"Delivery"},
+  };
+  return map[sector] || {t:"Operational Review & Improvement Planning",d:"Regardless of sector, the most valuable starting point is a structured review of how your business currently operates — identifying where time and resources are lost, where customers experience friction, and where the clearest opportunities for sustainable improvement exist.",tag:"Foundation"};
+}
+
+function getFindings(a, scores){
+  const f = [];
+  if(scores.ops < 40) f.push({dot:"ind-red", t:"Operations are heavily manual, creating significant risk of errors, delays, and knowledge loss if key staff are unavailable."});
+  else if(scores.ops < 65) f.push({dot:"ind-amber", t:"Some digital tools are in use but processes are not well integrated, creating information silos that slow decision-making."});
+  else f.push({dot:"ind-green", t:"Operational systems are reasonably structured. Focus should now shift to deeper automation and system optimisation."});
+
+  if(scores.data < 35) f.push({dot:"ind-red", t:"Business decisions are being made without reliable data, increasing the risk of costly misjudgements and missed early warning signs."});
+  else if(scores.data < 65) f.push({dot:"ind-amber", t:"Some reporting exists but is manual or infrequent. Real-time visibility would significantly sharpen decision-making across the business."});
+  else f.push({dot:"ind-green", t:"Good data visibility exists. Consider adding predictive analytics to move from reactive management to proactive strategy."});
+
+  if(scores.cx < 50) f.push({dot:"ind-red", t:`Customer experience gap identified: "${a.cx}". This is likely affecting customer retention and limiting referral-driven growth.`});
+  else f.push({dot:"ind-amber", t:"Customer experience is functional but digital channels could significantly expand reach and enable self-service, freeing staff time."});
+
+  const bmap = {
+    "Manual data entry & paperwork":"Significant staff capacity is being consumed by data entry tasks that could be fully automated, freeing the team for higher-value work.",
+    "Delayed approvals & slow decisions":"Approval bottlenecks are slowing operational velocity. Digital workflow tools can reduce approval turnaround from days to minutes.",
+    "Poor customer follow-up":"Missed follow-ups are resulting in lost sales and weakened relationships. A CRM system can systematically ensure no contact is left unattended.",
+    "Inventory losses or stockouts":"Inventory management gaps are creating direct revenue leakage. Real-time stock tracking is an immediate priority.",
+    "Billing & payment tracking":"Financial tracking gaps create cash flow risk and reconciliation overhead. Automated billing and payment monitoring is recommended.",
+    "Staff coordination & scheduling":"Coordination inefficiencies reduce overall team productivity. Scheduling and task management tools can unlock significant capacity.",
+  };
+  if(a.bottleneck && bmap[a.bottleneck]) f.push({dot:"ind-amber", t:bmap[a.bottleneck]});
+  return f;
+}
+
+function getRecs(a, scores){
+  const recs = [];
+  const sr = getSectorRec(a.sector);
+  recs.push(sr);
+
+  if(scores.ops < 55) recs.push({
+    t:"Process Efficiency & Workflow Review",
+    d:"Your responses indicate that a meaningful portion of your team's capacity is absorbed by manual, repetitive, or uncoordinated processes. A structured process review would identify the highest-burden workflows and determine the most appropriate way to streamline them — the solution depends on what we find.",
+    tag:"Efficiency"
+  });
+
+  if(scores.data < 55) recs.push({
+    t:"Management Visibility & Reporting",
+    d:"Decision-making without reliable, timely information is one of the most common and costly operational gaps. A review of how your business currently captures and uses data will clarify what reporting capability would add the most value at your current stage of growth.",
+    tag:"Intelligence"
+  });
+
+  if(a.cx && a.cx !== "Customer experience is generally good") recs.push({
+    t:"Customer Journey Mapping & Experience Improvement",
+    d:"The customer experience gaps you have identified are worth investigating in detail. The most effective intervention depends on where in the customer journey the friction sits — which is something we would map together during a consultation before recommending any specific approach.",
+    tag:"Retention"
+  });
+
+  if(scores.digital < 50) recs.push({
+    t:"Digital Readiness & Phased Adoption Planning",
+    d:"Introducing digital tools without a clear adoption plan is a common source of wasted investment. The right starting point depends on your team's current capacity, your infrastructure, and where the operational pain is greatest — all of which we would assess before recommending a path forward.",
+    tag:"Foundation"
+  });
+
+  if(scores.infra < 45) recs.push({
+    t:"Infrastructure & Connectivity Assessment",
+    d:"Reliable infrastructure is the foundation of any digital improvement. Before recommending specific tools or systems, it is worth conducting a brief assessment of your current connectivity, devices, and technical environment to ensure any solution will actually be usable in your context.",
+    tag:"Readiness"
+  });
+
+  return recs.slice(0, 4);
+}
+
+// ── BUILD REPORT ─────────────────────────
+// ── BACKEND API ────────────────────────
+// Set this to your Railway URL after deploying, e.g. https://tuinnov8.up.railway.app
+const API_URL = (typeof window !== 'undefined' && window.TUINNOV8_API) ? window.TUINNOV8_API : '';
+
+async function postToAPI(endpoint, data) {
+  if (!API_URL) return;
+  try {
+    await fetch(API_URL + endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch(e) { console.warn('API post failed:', e); }
+}
+
+function buildReport(){
+  const a = answers;
+  const scores = score();
+  const mat = maturity(scores.ops, scores.digital);
+  const urg = urgency(scores);
+  const findings = getFindings(a, scores);
+  const recs = getRecs(a, scores);
+  const overall = Math.round(Object.values(scores).reduce((x,y)=>x+y,0) / Object.values(scores).length);
+  const today = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+  const opsDim = dimBadge(scores.ops);
+  const dataDim = dimBadge(scores.data);
+  const cxDim = dimBadge(scores.cx);
+  const digDim = dimBadge(scores.digital);
+
+  const scoreLabel = v => v>=68?"Strong":v>=42?"Developing":"Needs Attention";
+  const dimColour  = v => v>=68?"#16A34A":v>=42?"#D97706":"#DC2626";
+  const dimBadgeCss = v => v>=68
+    ? "background:#F0FDF4;color:#16A34A;"
+    : v>=42 ? "background:#FFFBEB;color:#D97706;"
+    : "background:#FEF2F2;color:#DC2626;";
+
+  const matLabels = ['Manual','Basic Digital','Partial Integration','Advanced Digital','Fully Integrated'];
+  const matCells = [1,2,3,4,5].map(i => {
+    let cls = i===mat.level ? 'active' : i<mat.level ? 'passed' : 'ahead';
+    return '<div class="word-maturity-cell ' + cls + '">' + matLabels[i-1] + '</div>';
+  }).join('');
+
+  const urgLabel = overall<38?"High Priority":overall<64?"Moderate Priority":"Well Positioned";
+  const urgColour = overall<38?"#DC2626":overall<64?"#D97706":"#16A34A";
+
+  const findingColour = d => d==='ind-red'?'red':d==='ind-amber'?'amber':'green';
+  const findingLabel  = d => d==='ind-red'?'Critical':d==='ind-amber'?'Advisory':'Positive';
+
+  let html = '<div class="word-report">';
+
+  // ── COVER ──────────────────────────────────────────
+  html += '<div class="word-cover">';
+  html += '<div class="word-cover-top">';
+  html += '<div class="word-cover-brand"><div class="word-cover-brand-mark">&#9889;</div><span class="word-cover-brand-name">Tuinnov8</span></div>';
+  html += '<div class="word-cover-tag">Business Innovation Discovery Report</div>';
+  html += '<div class="word-cover-title">Operational Assessment<br>&amp; Diagnostic Report</div>';
+  html += '<div class="word-cover-biz">' + (a.bizName||'Your Organisation') + '</div>';
+  html += '</div>';
+
+  html += '<div class="word-cover-body">';
+  html += '<div class="word-cover-meta-grid">';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">Organisation</div><div class="word-meta-value">' + (a.bizName||'&mdash;') + '</div></div>';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">Sector</div><div class="word-meta-value">' + (a.sector||'&mdash;') + '</div></div>';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">Team Size</div><div class="word-meta-value">' + (a.size||'&mdash;') + '</div></div>';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">Report Date</div><div class="word-meta-value">' + today + '</div></div>';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">Priority Classification</div><div class="word-meta-value" style="color:' + urgColour + '">' + urgLabel + '</div></div>';
+  html += '<div class="word-cover-meta-cell"><div class="word-meta-label">12-Month Focus</div><div class="word-meta-value">' + (a.priority||'&mdash;') + '</div></div>';
+  html += '</div>';
+
+  html += '<div class="word-cover-scores">';
+  html += '<div class="word-cover-score-box"><div class="word-cover-score-val accent">' + overall + '%</div><div class="word-cover-score-lbl">Overall Maturity Score</div></div>';
+  html += '<div class="word-cover-score-box"><div class="word-cover-score-val">' + mat.level + ' / 5</div><div class="word-cover-score-lbl">' + mat.label + '</div></div>';
+  html += '<div class="word-cover-score-box"><div class="word-cover-score-val" style="font-size:16px;padding-top:8px;color:' + urgColour + '">' + urgLabel + '</div><div class="word-cover-score-lbl">Action Priority</div></div>';
+  html += '</div>';
+
+  if(a.bizDesc) html += '<p style="font-size:13px;color:#555;line-height:1.8;font-style:italic;border-left:3px solid var(--accent);padding-left:16px;margin-bottom:28px;">&ldquo;' + a.bizDesc + '&rdquo;</p>';
+
+  html += '<div class="word-cover-prepared">';
+  html += '<div><div class="word-prepared-by">Prepared by</div><div class="word-prepared-name">Tuinnov8 &mdash; Business Innovation Discovery Framework</div><div style="font-size:11px;color:#AAA;margin-top:2px;">For internal use and consultation purposes only</div></div>';
+  html += '<div class="word-confidential">Confidential</div>';
+  html += '</div></div></div>';
+
+  // ── EXECUTIVE SUMMARY ───────────────────────────────
+  html += '<div class="word-page">';
+  html += '<div class="word-chapter-label">Chapter 1</div>';
+  html += '<div class="word-h1">Executive Summary</div><div class="word-h1-rule"></div>';
+  html += '<p class="word-body">This report presents the findings of the Business Innovation Discovery (BID) assessment completed by <strong>' + (a.bizName||'the organisation') + '</strong>, operating in the <strong>' + (a.sector||'business') + '</strong> sector with a team of <strong>' + (a.size||'an undisclosed number of') + '</strong> people. The assessment was conducted using Tuinnov8\'s structured diagnostic framework, which evaluates operational maturity across five dimensions: operations and systems, customer experience, data and reporting, digital readiness, and infrastructure.</p>';
+  html += '<p class="word-body">Based on the responses provided, the organisation records an overall digital maturity score of <strong>' + overall + '%</strong>, placing it at <strong>Level ' + mat.level + ' of 5 &mdash; ' + mat.label + '</strong>. This report should be read as a starting point for a more detailed consultation, not as a definitive audit. The findings below reflect patterns identified through the assessment responses and are intended to prompt structured discussion.</p>';
+
+  html += '<div class="word-h2">Score Summary</div>';
+  html += '<table class="word-summary-table"><tr><th>Dimension</th><th>Score</th><th>Classification</th><th>Response Recorded</th></tr>';
+  html += '<tr><td><strong>Operations &amp; Systems</strong></td><td><strong style="color:' + dimColour(scores.ops) + '">' + Math.round(scores.ops) + '%</strong></td><td>' + scoreLabel(scores.ops) + '</td><td style="font-size:12px;color:#666">' + (a.ops||'&mdash;') + '</td></tr>';
+  html += '<tr><td><strong>Customer Experience</strong></td><td><strong style="color:' + dimColour(scores.cx) + '">' + Math.round(scores.cx) + '%</strong></td><td>' + scoreLabel(scores.cx) + '</td><td style="font-size:12px;color:#666">' + (a.cx||'&mdash;') + '</td></tr>';
+  html += '<tr><td><strong>Data &amp; Reporting</strong></td><td><strong style="color:' + dimColour(scores.data) + '">' + Math.round(scores.data) + '%</strong></td><td>' + scoreLabel(scores.data) + '</td><td style="font-size:12px;color:#666">' + (a.data||'&mdash;') + '</td></tr>';
+  html += '<tr><td><strong>Digital Readiness</strong></td><td><strong style="color:' + dimColour(scores.digital) + '">' + Math.round(scores.digital) + '%</strong></td><td>' + scoreLabel(scores.digital) + '</td><td style="font-size:12px;color:#666">' + (a.digital||'&mdash;') + '</td></tr>';
+  html += '<tr><td><strong>Infrastructure</strong></td><td><strong style="color:' + dimColour(scores.infra) + '">' + Math.round(scores.infra) + '%</strong></td><td>' + scoreLabel(scores.infra) + '</td><td style="font-size:12px;color:#666">' + (a.infra||'&mdash;') + '</td></tr>';
+  html += '</table>';
+
+  html += '<div class="word-h2">Digital Maturity Scale</div>';
+  html += '<div class="word-maturity-scale">' + matCells + '</div>';
+  html += '<p style="font-size:12px;color:#888;margin-top:8px;">The organisation is currently at <strong style="color:var(--navy)">Level ' + mat.level + ' &mdash; ' + mat.label + '</strong>. Movement between levels requires deliberate process change alongside any technology investment.</p>';
+  html += '</div>';
+
+  // ── DIAGNOSTIC ANALYSIS ─────────────────────────────
+  html += '<div class="word-page">';
+  html += '<div class="word-chapter-label">Chapter 2</div>';
+  html += '<div class="word-h1">Diagnostic Analysis</div><div class="word-h1-rule"></div>';
+  html += '<p class="word-body">The following analysis examines each assessment dimension. Observations are drawn from the organisation\'s responses and are intended to surface areas warranting further investigation during a consultation session.</p>';
+
+  // Ops
+  html += '<div class="word-h2">2.1 &nbsp; Operations &amp; Systems</div>';
+  html += '<div class="word-dim-row"><div class="word-dim-header"><span class="word-dim-title">' + (a.ops||'&mdash;') + '</span><span class="word-dim-badge" style="' + dimBadgeCss(scores.ops) + '">' + scoreLabel(scores.ops) + ' &nbsp; ' + Math.round(scores.ops) + '%</span></div>';
+  html += '<div class="word-dim-bar-track"><div class="word-dim-bar-fill" style="width:' + scores.ops + '%;background:' + dimColour(scores.ops) + '"></div></div>';
+  if(scores.ops < 40) html += '<div class="word-dim-text">The organisation\'s operations are largely manual. This is not uncommon, but it creates meaningful exposure &mdash; to human error, knowledge dependency on specific individuals, and difficulty scaling without proportionally increasing headcount. The primary question a consultation would seek to answer is: <em>which processes cause the most friction, and what would it take to change them?</em></div>';
+  else if(scores.ops < 65) html += '<div class="word-dim-text">Some digital tools are in use, but the picture is one of partial adoption &mdash; individual tools that work in isolation but do not yet form a coherent operational system. Information often moves between these systems manually, creating gaps and duplication. A consultation would focus on understanding how information flows across the organisation and where the most significant breaks occur.</div>';
+  else html += '<div class="word-dim-text">The operational foundation is reasonably solid. The focus shifts from basic digitisation to optimisation &mdash; identifying where existing systems can be better connected and more effectively automated. A consultation would focus on the specific workflows where further refinement would yield the most meaningful return.</div>';
+  html += '</div>';
+  if(a.bottleneck) html += '<p class="word-body">The primary operational bottleneck identified was <strong>' + a.bottleneck + '</strong>. This will be a specific area of focus during the discovery consultation.</p>';
+
+  // CX
+  html += '<div class="word-h2">2.2 &nbsp; Customer Experience</div>';
+  html += '<div class="word-dim-row"><div class="word-dim-header"><span class="word-dim-title">' + (a.cx||'&mdash;') + '</span><span class="word-dim-badge" style="' + dimBadgeCss(scores.cx) + '">' + scoreLabel(scores.cx) + ' &nbsp; ' + Math.round(scores.cx) + '%</span></div>';
+  html += '<div class="word-dim-bar-track"><div class="word-dim-bar-fill" style="width:' + scores.cx + '%;background:' + dimColour(scores.cx) + '"></div></div>';
+  if(scores.cx < 50) html += '<div class="word-dim-text">The customer experience challenge identified &mdash; <em>' + (a.cx||'not specified') + '</em> &mdash; is a meaningful signal. Customer-facing friction has a direct impact on retention and referral, two of the most cost-effective growth levers available. The right response depends on where in the customer journey this friction is occurring, which process mapping would clarify.</div>';
+  else html += '<div class="word-dim-text">The customer experience appears generally functional, which is a strong foundation. The opportunity is to move beyond adequacy &mdash; identifying how improved channels or communication might expand what the organisation can offer without proportionally increasing cost.</div>';
+  html += '</div>';
+
+  // Data
+  html += '<div class="word-h2">2.3 &nbsp; Data &amp; Reporting</div>';
+  html += '<div class="word-dim-row"><div class="word-dim-header"><span class="word-dim-title">' + (a.data||'&mdash;') + '</span><span class="word-dim-badge" style="' + dimBadgeCss(scores.data) + '">' + scoreLabel(scores.data) + ' &nbsp; ' + Math.round(scores.data) + '%</span></div>';
+  html += '<div class="word-dim-bar-track"><div class="word-dim-bar-fill" style="width:' + scores.data + '%;background:' + dimColour(scores.data) + '"></div></div>';
+  if(scores.data < 40) html += '<div class="word-dim-text">Decisions made without timely, reliable information carry risk that accumulates quietly. The priority here is not immediately to build sophisticated analytics &mdash; it is to establish a reliable, consistent picture of what is happening in the business on a regular basis.</div>';
+  else if(scores.data < 65) html += '<div class="word-dim-text">Some reporting is in place, which provides a baseline. The gap is typically in frequency, reliability, and accessibility &mdash; reports that take significant time to produce or reach decision-makers too infrequently to drive timely action. A consultation would identify what decisions currently lack data support.</div>';
+  else html += '<div class="word-dim-text">Strong data visibility is in place. The next frontier is typically moving from descriptive reporting toward more forward-looking capability. A consultation would explore whether this investment is appropriate for the organisation\'s current stage.</div>';
+  html += '</div>';
+
+  // Digital
+  html += '<div class="word-h2">2.4 &nbsp; Digital Readiness</div>';
+  html += '<div class="word-dim-row"><div class="word-dim-header"><span class="word-dim-title">' + (a.digital||'&mdash;') + '</span><span class="word-dim-badge" style="' + dimBadgeCss(scores.digital) + '">' + scoreLabel(scores.digital) + ' &nbsp; ' + Math.round(scores.digital) + '%</span></div>';
+  html += '<div class="word-dim-bar-track"><div class="word-dim-bar-fill" style="width:' + scores.digital + '%;background:' + dimColour(scores.digital) + '"></div></div>';
+  if(scores.digital < 50) html += '<div class="word-dim-text">Digital adoption is most successful when phased and purposeful &mdash; anchored in solving a specific operational problem, not driven by technology in search of a use case. Any recommended path forward should prioritise visible wins that demonstrate value early and build internal confidence before larger investments are made.</div>';
+  else html += '<div class="word-dim-text">There is clear appetite for digital adoption within the organisation, which is one of the most important predictors of successful implementation. The key is ensuring enthusiasm is channelled toward the areas of highest operational impact and that adoption is structured to sustain beyond the initial launch.</div>';
+  html += '</div></div>';
+
+  // ── KEY FINDINGS ────────────────────────────────────
+  html += '<div class="word-page">';
+  html += '<div class="word-chapter-label">Chapter 3</div>';
+  html += '<div class="word-h1">Key Findings</div><div class="word-h1-rule"></div>';
+  html += '<p class="word-body">The following findings are drawn from the assessment responses. They are presented in order of relative urgency and are intended to focus the agenda of a follow-up consultation session rather than to prescribe specific solutions.</p>';
+  findings.forEach(f => {
+    html += '<div class="word-finding ' + findingColour(f.dot) + '"><div><div class="word-finding-label">' + findingLabel(f.dot) + '</div></div><div class="word-finding-text">' + f.t + '</div></div>';
+  });
+  if(a.extra) {
+    html += '<div class="word-h2" style="margin-top:24px;">Additional Context</div>';
+    html += '<div class="word-dim-row" style="border-left:3px solid var(--accent);"><div class="word-dim-text" style="font-style:italic;">&ldquo;' + a.extra + '&rdquo;</div></div>';
+    html += '<p class="word-body" style="font-size:12px;color:#888;">This context will be incorporated into the consultation brief.</p>';
+  }
+  html += '</div>';
+
+  // ── AREAS FOR INVESTIGATION ─────────────────────────
+  html += '<div class="word-page">';
+  html += '<div class="word-chapter-label">Chapter 4</div>';
+  html += '<div class="word-h1">Areas for Further Investigation</div><div class="word-h1-rule"></div>';
+  html += '<p class="word-body">The following areas have been identified as warranting deeper investigation based on the assessment responses. These are not prescriptive recommendations &mdash; the specific approach, tools, and sequencing for each area will be determined through a detailed consultation and process mapping session with the Tuinnov8 team.</p>';
+  html += '<p class="word-body">Each area reflects a pattern that commonly underlies operational inefficiency, unrealised growth potential, or avoidable risk. The consultation will determine which applies most directly to <strong>' + (a.bizName||'your organisation') + '</strong> and in what order they should be addressed.</p>';
+
+  recs.forEach((r, i) => {
+    html += '<div class="word-rec"><div class="word-rec-num">' + (i+1) + '</div><div class="word-rec-body"><div class="word-rec-title">' + r.t + '</div><div class="word-rec-desc">' + r.d + '</div><span class="word-rec-tag">' + r.tag + '</span></div></div>';
+  });
+
+  html += '<p class="word-body" style="margin-top:20px;font-size:12.5px;color:#666;font-style:italic;">Note: The above areas are informed by the assessment responses and sector context. They are presented as a basis for structured discussion. Tuinnov8 does not recommend specific systems, vendors, or technical approaches until a full discovery consultation has been completed.</p>';
+  html += '</div>';
+
+  // ── NEXT STEPS ──────────────────────────────────────
+  html += '<div class="word-page">';
+  html += '<div class="word-chapter-label">Chapter 5</div>';
+  html += '<div class="word-h1">Proposed Next Steps</div><div class="word-h1-rule"></div>';
+  html += '<p class="word-body">This assessment provides a structured starting point. The value of the BID framework is in what it surfaces for deeper exploration &mdash; not in the report itself. The recommended next steps for <strong>' + (a.bizName||'your organisation') + '</strong> are set out below.</p>';
+
+  html += '<table class="word-summary-table" style="margin-bottom:28px;"><tr><th style="width:36px">#</th><th>Step</th><th>Purpose</th></tr>';
+  html += '<tr><td><strong>1</strong></td><td><strong>Discovery Consultation</strong></td><td>A 90-minute structured session with a Tuinnov8 consultant to validate findings, map processes in detail, and identify the highest-priority intervention areas.</td></tr>';
+  html += '<tr><td><strong>2</strong></td><td><strong>Process Mapping</strong></td><td>A detailed mapping of core operational flows &mdash; customer journey, internal communication, financial tracking, and sector-specific processes &mdash; to locate exactly where friction occurs.</td></tr>';
+  html += '<tr><td><strong>3</strong></td><td><strong>Solution Design</strong></td><td>Based on consultation findings, Tuinnov8 prepares a tailored brief outlining a specific, phased approach to priority areas &mdash; including indicative timelines and investment options.</td></tr>';
+  html += '<tr><td><strong>4</strong></td><td><strong>Implementation Planning</strong></td><td>A detailed implementation plan developed with relevant stakeholders, including milestones, responsibilities, and success metrics.</td></tr>';
+  html += '</table>';
+
+  html += '<div class="word-next-steps">';
+  html += '<div class="word-next-label">Get Started</div>';
+  html += '<div class="word-next-title">Schedule your free consultation</div>';
+  html += '<div class="word-next-body">A Tuinnov8 consultant will review this report, reach out to confirm the findings, and arrange a discovery session at a time that suits you. The initial consultation is provided at no cost and carries no obligation.</div>';
+  html += '<div class="word-next-contact">&#128231; &nbsp;info@tuinnov8.com &nbsp;&middot;&nbsp; &#127760; &nbsp;tuinnov8.com/consult</div>';
+  html += '<div class="word-next-buttons">';
+  html += '<button class="btn-cta-primary" onclick="openModal()" style="font-size:14px;padding:13px 28px;">&#128197; Schedule Consultation</button>';
+  html += '<button class="btn-cta-primary" style="background:var(--accent);font-size:14px;padding:13px 28px;" onclick="openImplModal()">&#9889; Implement with Tuinnov8</button>';
+  html += '<button class="btn-cta-secondary" onclick="resetAll()" style="font-size:14px;">&#8592; New Assessment</button>';
+  html += '</div></div>';
+
+  html += '<p style="font-size:11px;color:#AAA;text-align:center;margin-top:28px;line-height:1.7;">This report was generated by the Tuinnov8 Business Innovation Discovery Framework and is based solely on self-reported assessment responses. It should be read as a diagnostic starting point, not a definitive business audit. &copy; 2025 Tuinnov8. All rights reserved. Confidential.</p>';
+  html += '</div></div>';
+
+  g('report-body').innerHTML = html;
+  g('assessment-page').style.display = 'none';
+  g('report-page').style.display = 'block';
+  window.scrollTo(0,0);
+  // Send assessment to backend
+  postToAPI('/api/assessment', { ...answers, overallScore: Math.round(Object.values(score()).reduce((x,y)=>x+y,0)/Object.values(score()).length) });
+}
+
+function openModal(){ g('modal').classList.add('open'); }
+function closeModal(){ g('modal').classList.remove('open'); }
+
+function openImplModal(){ g('impl-modal').classList.add('open'); }
+function closeImplModal(){ g('impl-modal').classList.remove('open'); }
+
+function submitImpl(){
+  const name = g('i-name').value.trim();
+  const email = g('i-email').value.trim();
+  const phone = g('i-phone').value.trim();
+  const timeline = g('i-timeline').value;
+  const budget = g('i-budget').value;
+  if(!name || !email){ alert("Please enter your name and email address."); return; }
+  postToAPI('/api/implementation', { name, email, phone, timeline, budget, bizName: answers.bizName, sector: answers.sector });
+  g('impl-modal-content').innerHTML = `
+    <div class="submit-success">
+      <div class="success-icon" style="background:#FEF3E2;font-size:22px">⚡</div>
+      <div class="success-title">Implementation request sent!</div>
+      <p class="success-sub">Thank you, ${name}. The Tuinnov8 expert team has received your request and will reach out within 24 hours to begin scoping your project based on your BID report.</p>
+    </div>`;
+  setTimeout(closeImplModal, 4500);
+}
+
+function submitConsultation(){
+  const name = g('m-name').value.trim();
+  const email = g('m-email').value.trim();
+  const phone = g('m-phone').value.trim();
+  const time = g('m-time').value;
+  if(!name || !email){ alert("Please enter your name and email address."); return; }
+  postToAPI('/api/consultation', { name, email, phone, time, bizName: answers.bizName, sector: answers.sector });
+  g('modal-content').innerHTML = `
+    <div class="submit-success">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Request received!</div>
+      <p class="success-sub">Thank you, ${name}. A Tuinnov8 consultant will review your assessment report and reach out within 1 business day to arrange your consultation.</p>
+    </div>`;
+  setTimeout(closeModal, 4000);
+}
+
+function resetAll(){
+  current = 0; answers = {};
+  g('report-page').style.display = 'none';
+  g('landing').style.display = 'flex';
+  window.scrollTo(0,0);
+}
+</script>
+
+<!-- ── CONSENT MODAL ──────────────────────────────── -->
+<div class="consent-overlay" id="consent-overlay">
+  <div class="consent-box">
+    <div class="consent-header">
+      <div class="consent-header-inner">
+        <div class="consent-shield">🛡️</div>
+        <div class="consent-header-title">Your Privacy Matters to Us</div>
+        <div class="consent-header-sub">Before you begin, please take a moment to understand how we handle your information. We've designed this assessment with your privacy at the forefront.</div>
+      </div>
+    </div>
+
+    <div class="consent-body">
+      <div class="consent-highlights">
+        <div class="consent-highlight green">
+          <span class="consent-highlight-icon">✅</span>
+          <div class="consent-highlight-text">
+            <div class="consent-highlight-title">No sensitive personal information collected</div>
+            <div class="consent-highlight-desc">We only ask about your business operations, sector, and goals — not names, ID numbers, financial records, or personal contact details during the assessment itself.</div>
+          </div>
+        </div>
+        <div class="consent-highlight blue">
+          <span class="consent-highlight-icon">🔒</span>
+          <div class="consent-highlight-text">
+            <div class="consent-highlight-title">Your data is secure and not sold</div>
+            <div class="consent-highlight-desc">All information submitted is stored securely. We never sell, rent, or share your data with third parties for marketing purposes.</div>
+          </div>
+        </div>
+        <div class="consent-highlight amber">
+          <span class="consent-highlight-icon">📋</span>
+          <div class="consent-highlight-text">
+            <div class="consent-highlight-title">Used only to generate your report</div>
+            <div class="consent-highlight-desc">Your responses are used exclusively to produce your personalised Business Innovation Discovery Report and, if you request it, to facilitate a consultation.</div>
+          </div>
+        </div>
+        <div class="consent-highlight purple">
+          <span class="consent-highlight-icon">🗑️</span>
+          <div class="consent-highlight-text">
+            <div class="consent-highlight-title">You can request deletion at any time</div>
+            <div class="consent-highlight-desc">You have the right to request access to, correction of, or deletion of any information you provide. Contact us at privacy@tuinnov8.com.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="consent-divider"></div>
+
+      <div class="consent-legal-title">Legal Basis &amp; Consent</div>
+      <p class="consent-legal-text">
+        Tuinnov8 processes the business information you provide on the basis of your freely given, specific, and informed consent, in accordance with internationally recognised data protection principles including those established under the <strong>General Data Protection Regulation (GDPR)</strong> and the <strong>ISO/IEC 27001</strong> information security framework.
+      </p>
+      <p class="consent-legal-text">
+        By proceeding, you confirm that the information you provide is accurate to the best of your knowledge and that you are authorised to share it on behalf of your organisation. Our data practices are aligned with internationally recognised privacy standards. Please review our
+        <a onclick="openPolicy('privacy')">Privacy Policy</a> and
+        <a onclick="openPolicy('terms')">Terms of Service</a> before continuing.
+      </p>
+
+      <div class="consent-checks">
+        <label class="consent-check-row" onclick="toggleCheck('chk1')">
+          <div class="consent-checkbox" id="chk1"><span class="consent-checkbox-tick">✓</span></div>
+          <span class="consent-check-label">I have read and agree to Tuinnov8's <strong><a onclick="event.stopPropagation();openPolicy('privacy')">Privacy Policy</a></strong> and <strong><a onclick="event.stopPropagation();openPolicy('terms')">Terms of Service</a></strong>. I confirm I am authorised to share the business information provided, understand that only operational information is collected, and that I may withdraw consent at any time by contacting privacy@tuinnov8.com.</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="consent-footer">
+      <div class="consent-btn-row">
+        <button class="btn-consent-decline" onclick="declineConsent()">Decline</button>
+        <button class="btn-consent-agree" id="btn-agree" disabled onclick="agreeConsent()">I Agree — Start Assessment →</button>
+      </div>
+      <div class="consent-disclaimer">
+        🔐 Your information is encrypted in transit · Never sold to third parties · Aligned with international data protection standards
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── POLICY MODAL ──────────────────────────────── -->
+<div class="policy-overlay" id="policy-overlay">
+  <div class="policy-box">
+    <div class="policy-header">
+      <div class="policy-header-title" id="policy-modal-title">Privacy Policy</div>
+      <button class="policy-close" onclick="closePolicy()">✕</button>
+    </div>
+    <div class="policy-tabs">
+      <button class="policy-tab active" id="tab-privacy" onclick="switchTab('privacy')">Privacy Policy</button>
+      <button class="policy-tab" id="tab-terms" onclick="switchTab('terms')">Terms of Service</button>
+    </div>
+    <div class="policy-content" id="policy-content"></div>
+    <div class="policy-footer">
+      <button class="btn-policy-close" onclick="closePolicy()">Close</button>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
