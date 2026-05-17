@@ -2206,58 +2206,52 @@ function getFindings(a, scores){
 
 function getRecs(a, scores){
   const recs = [];
-  const sr = getSectorRec(a.sector);
-  recs.push(sr);
+  recs.push(getSectorRec(a.sector));
 
   if(scores.ops < 55) recs.push({
-    t:"Process Efficiency & Workflow Review",
-    d:"Your responses indicate that a meaningful portion of your team's capacity is absorbed by manual, repetitive, or uncoordinated processes. A structured process review would identify the highest-burden workflows and determine the most appropriate way to streamline them — the solution depends on what we find.",
-    tag:"Efficiency"
+    t:"Business Process Automation",
+    d:"Identify and automate the most time-consuming manual workflows — approval chains, data entry, internal notifications, and report generation — using tools tailored to your operational context.",
+    tag:"Efficiency",
+    value:"Every hour of manual work automated is an hour redirected to customer-facing or revenue-generating activity. Organisations that automate core workflows typically reduce operational costs by 20–30% and can scale output without proportionally increasing headcount."
   });
 
   if(scores.data < 55) recs.push({
-    t:"Management Visibility & Reporting",
-    d:"Decision-making without reliable, timely information is one of the most common and costly operational gaps. A review of how your business currently captures and uses data will clarify what reporting capability would add the most value at your current stage of growth.",
-    tag:"Intelligence"
+    t:"Real-Time Business Intelligence Dashboard",
+    d:"A live management dashboard consolidating key metrics — revenue, customer activity, operational performance, and staff productivity — into a single view accessible from any device.",
+    tag:"Intelligence",
+    value:"Decisions made with accurate, timely data consistently outperform those made on intuition. Visibility into what drives revenue and what causes loss allows management to respond within hours rather than weeks — a measurable competitive advantage."
   });
 
   if(a.cx && a.cx !== "Customer experience is generally good") recs.push({
-    t:"Customer Journey Mapping & Experience Improvement",
-    d:"The customer experience gaps you have identified are worth investigating in detail. The most effective intervention depends on where in the customer journey the friction sits — which is something we would map together during a consultation before recommending any specific approach.",
-    tag:"Retention"
+    t:"Customer Retention & Engagement Platform",
+    d:"A CRM and engagement system that tracks every customer interaction, automates follow-ups and reminders, captures feedback, and enables targeted communication — ensuring no relationship is left unmanaged.",
+    tag:"Retention",
+    value:"Acquiring a new customer costs 5–7x more than retaining an existing one. A 5% improvement in customer retention can increase profitability by 25–95% depending on sector. Automated follow-ups directly reduce churn and increase the lifetime value of each customer."
   });
 
   if(scores.digital < 50) recs.push({
-    t:"Digital Readiness & Phased Adoption Planning",
-    d:"Introducing digital tools without a clear adoption plan is a common source of wasted investment. The right starting point depends on your team's current capacity, your infrastructure, and where the operational pain is greatest — all of which we would assess before recommending a path forward.",
-    tag:"Foundation"
+    t:"Phased Digital Transformation Roadmap",
+    d:"A structured, prioritised plan for moving from the current operational state to an integrated digital environment — sequenced by impact and budget, with clear milestones and staff adoption support built in.",
+    tag:"Foundation",
+    value:"Organisations with a clear digital roadmap achieve adoption rates significantly higher than those implementing tools reactively. A phased approach protects budget by ensuring each investment delivers measurable value before the next is made."
   });
 
   if(scores.infra < 45) recs.push({
-    t:"Infrastructure & Connectivity Assessment",
-    d:"Reliable infrastructure is the foundation of any digital improvement. Before recommending specific tools or systems, it is worth conducting a brief assessment of your current connectivity, devices, and technical environment to ensure any solution will actually be usable in your context.",
-    tag:"Readiness"
+    t:"Infrastructure & Connectivity Readiness",
+    d:"A practical review of current internet connectivity, available devices, network configuration, and backup systems — followed by a brief on what infrastructure improvements are needed before any digital solution can perform reliably.",
+    tag:"Readiness",
+    value:"Technology investments on poor infrastructure routinely fail, wasting budget and team goodwill. Getting the foundation right first protects every subsequent investment and ensures digital tools actually perform in the day-to-day operating environment."
+  });
+
+  if(a.revenue === "No online sales or booking channel") recs.push({
+    t:"Digital Sales & Online Revenue Channel",
+    d:"Build a direct online channel — whether e-commerce, online booking, digital ordering, or a payment portal — enabling customers to transact at any time without requiring staff involvement.",
+    tag:"Growth",
+    value:"Businesses that add a direct online channel typically see 15–40% revenue growth within the first year. An online channel operates 24/7, reaching customers who would never visit in person and capturing revenue currently lost to competitors with a digital presence."
   });
 
   return recs.slice(0, 4);
 }
-
-// ── BUILD REPORT ─────────────────────────
-// ── BACKEND API ────────────────────────
-// Set this to your Railway URL after deploying, e.g. https://tuinnov8.up.railway.app
-const API_URL = (typeof window !== 'undefined' && window.TUINNOV8_API) ? window.TUINNOV8_API : '';
-
-async function postToAPI(endpoint, data) {
-  if (!API_URL) return;
-  try {
-    await fetch(API_URL + endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-  } catch(e) { console.warn('API post failed:', e); }
-}
-
 function buildReport(){
   const a = answers;
   const scores = score();
@@ -2411,7 +2405,12 @@ function buildReport(){
   html += '<p class="word-body">Each area reflects a pattern that commonly underlies operational inefficiency, unrealised growth potential, or avoidable risk. The consultation will determine which applies most directly to <strong>' + (a.bizName||'your organisation') + '</strong> and in what order they should be addressed.</p>';
 
   recs.forEach((r, i) => {
-    html += '<div class="word-rec"><div class="word-rec-num">' + (i+1) + '</div><div class="word-rec-body"><div class="word-rec-title">' + r.t + '</div><div class="word-rec-desc">' + r.d + '</div><span class="word-rec-tag">' + r.tag + '</span></div></div>';
+    html += '<div class="word-rec"><div class="word-rec-num">' + (i+1) + '</div><div class="word-rec-body">' +
+      '<div class="word-rec-title">' + r.t + '</div>' +
+      '<div class="word-rec-desc">' + r.d + '</div>' +
+      (r.value ? '<div class="word-rec-value"><span class="word-rec-value-label">&#128200; Business Value &amp; Revenue Impact</span>' + r.value + '</div>' : '') +
+      (r.tag ? '<span class="word-rec-tag">' + r.tag + '</span>' : '') +
+      '</div></div>';
   });
 
   html += '<p class="word-body" style="margin-top:20px;font-size:12.5px;color:#666;font-style:italic;">Note: The above areas are informed by the assessment responses and sector context. They are presented as a basis for structured discussion. Tuinnov8 does not recommend specific systems, vendors, or technical approaches until a full discovery consultation has been completed.</p>';
@@ -2448,8 +2447,6 @@ function buildReport(){
   g('assessment-page').style.display = 'none';
   g('report-page').style.display = 'block';
   window.scrollTo(0,0);
-  // Send assessment to backend
-  postToAPI('/api/assessment', { ...answers, overallScore: Math.round(Object.values(score()).reduce((x,y)=>x+y,0)/Object.values(score()).length) });
 }
 
 function openModal(){ g('modal').classList.add('open'); }
@@ -2465,7 +2462,6 @@ function submitImpl(){
   const timeline = g('i-timeline').value;
   const budget = g('i-budget').value;
   if(!name || !email){ alert("Please enter your name and email address."); return; }
-  postToAPI('/api/implementation', { name, email, phone, timeline, budget, bizName: answers.bizName, sector: answers.sector });
   g('impl-modal-content').innerHTML = `
     <div class="submit-success">
       <div class="success-icon" style="background:#FEF3E2;font-size:22px">⚡</div>
@@ -2481,7 +2477,6 @@ function submitConsultation(){
   const phone = g('m-phone').value.trim();
   const time = g('m-time').value;
   if(!name || !email){ alert("Please enter your name and email address."); return; }
-  postToAPI('/api/consultation', { name, email, phone, time, bizName: answers.bizName, sector: answers.sector });
   g('modal-content').innerHTML = `
     <div class="submit-success">
       <div class="success-icon">✓</div>
