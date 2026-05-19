@@ -1509,3 +1509,47 @@ body {
   display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
   position: relative; z-index: 1;
 }
+
+/* AI insights block */
+.word-ai-page { background: #fbfcff; }
+.word-ai-header { margin-bottom: 10px; }
+.word-ai-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe;
+  border-radius: 999px; padding: 6px 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+}
+.word-ai-mount { min-height: 120px; }
+.word-ai-loading { text-align: center; padding: 24px 12px; color: #475569; }
+.word-ai-spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 3px solid #e2e8f0; border-top-color: #4f46e5;
+  margin: 0 auto 12px auto; animation: spin 0.9s linear infinite;
+}
+.word-ai-loading-text { font-size: 14px; font-weight: 600; color: #1e293b; }
+.word-ai-loading-sub { font-size: 12px; margin-top: 6px; color: #64748b; }
+.word-ai-source {
+  font-size: 11px; color: #475569; margin-bottom: 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.word-ai-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.word-ai-card {
+  border: 1px solid #e2e8f0; border-radius: 8px; background: #fff;
+  padding: 14px 16px;
+}
+.word-ai-card-wide { grid-column: 1 / -1; }
+.word-ai-card-title {
+  font-size: 12px; font-weight: 700; color: #0f172a;
+  margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px;
+}
+.word-ai-paragraph { margin: 0; font-size: 13px; color: #334155; line-height: 1.7; }
+.word-ai-list { margin: 0; padding-left: 18px; }
+.word-ai-list li { margin-bottom: 8px; font-size: 13px; line-height: 1.6; color: #334155; }
+.word-ai-error {
+  border: 1px solid #fecaca; background: #fef2f2; color: #991b1b;
+  padding: 12px 14px; border-radius: 8px; font-size: 13px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

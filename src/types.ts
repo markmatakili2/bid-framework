@@ -74,3 +74,24 @@ export interface SectorRec {
   d: string;
   tag: string;
 }
+
+export interface InsightRequest {
+  answers: Answers;
+  scores: Scores;
+  overallScore: number;
+  maturityLevel: number;
+  maturityLabel: string;
+  findings: Finding[];
+  recommendations: { t: string; d: string; tag?: string }[];
+}
+
+export interface AiInsights {
+  source: 'ai' | 'smart';
+  executiveSummary: string;
+  strategicPriorities: string[];
+  risks: string[];
+  opportunities: string[];
+  sectorInsight: string;
+  quickWins: string[];
+  consultationAgenda: string;
+}

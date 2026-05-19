@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createSession, isValidToken, verifyPassword } from './auth.js';
+import { generateInsights, type InsightRequest } from './insights.js';
 import { addSubmission, getStats, getSubmission, listSubmissions } from './store.js';
 import type { Submission, SubmissionType } from './types.js';
 
@@ -27,6 +29,21 @@ function requireAdmin(
   }
   next();
 }
+
+app.post('/api/ai/insights', async (req, res) => {
+  const body = req.body as InsightRequest | undefined;
+  if (!body?.scores || !body?.answers) {
+    res.status(400).json({ error: 'Invalid assessment context' });
+    return;
+  }
+  try {
+    const insights = await generateInsights(body);
+    res.json(insights);
+  } catch (err) {
+    console.error('[AI] insights error:', err);
+    res.status(500).json({ error: 'Failed to generate insights' });
+  }
+});
 
 app.post('/api/submissions', (req, res) => {
   const { sessionId, type, assessment, contact } = req.body ?? {};

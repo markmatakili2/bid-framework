@@ -3,12 +3,14 @@ import bodyHtml from './body.html?raw';
 import * as consent from './consent';
 import * as assessment from './assessment';
 import * as modals from './modals';
+import { saveReportAsPdf } from './pdf';
 
 const api = {
   ...consent,
   ...assessment,
   ...modals,
-  print: () => window.print(),
+  saveReportAsPdf,
+  print: () => void saveReportAsPdf(),
 };
 
 Object.assign(window, api);
