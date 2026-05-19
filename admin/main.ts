@@ -60,7 +60,8 @@ async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (res.status === 401) {
     setToken(null);
     renderLogin();
-    throw new Error('Unauthorized');
+    const err = await res.json().catch(() => ({}));
+    throw new Error((err as { error?: string }).error || 'Unauthorized');
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
