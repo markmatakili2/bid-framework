@@ -27,7 +27,7 @@ function sign(value: string): string {
 }
 
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || 'tuinnov8-admin';
+  return process.env.ADMIN_PASSWORD || 'mark-admin';
 }
 
 export function createSession(): string {
