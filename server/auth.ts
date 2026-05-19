@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'crypto';
 
 const SESSION_DURATION_SEC = 24 * 60 * 60;
-const TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || 'tuinnov8-admin-token-secret';
+const TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET?.trim() || 'tuinnov8-admin-token-secret';
 
 function base64UrlEncode(value: string): string {
   return Buffer.from(value, 'utf8')
@@ -27,7 +27,8 @@ function sign(value: string): string {
 }
 
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || 'mark-admin';
+  const password = process.env.ADMIN_PASSWORD?.trim();
+  return password && password.length > 0 ? password : 'mark-admin';
 }
 
 export function createSession(): string {
