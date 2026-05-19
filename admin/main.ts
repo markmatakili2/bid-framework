@@ -134,8 +134,9 @@ function renderLogin(error = ''): void {
       });
       setToken(token);
       await loadDashboard();
-    } catch {
-      renderLogin('Invalid password. Please try again.');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Invalid password. Please try again.';
+      renderLogin(message);
     }
   });
 }
