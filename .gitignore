@@ -1,2 +1,6 @@
 node_modules/
+dist/
+data/
 .env
+src/_*.js
+src/legacy-app.js
