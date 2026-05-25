@@ -4,3 +4,4 @@ dist/
 .env
 src/_*.js
 src/legacy-app.js
+.vercel

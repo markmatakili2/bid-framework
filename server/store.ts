@@ -1,9 +1,15 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 import { randomUUID } from 'crypto';
 import type { DashboardStats, Submission, SubmissionType } from './types.js';
 
-const DATA_DIR = path.resolve(process.cwd(), 'data');
+const isServerless = Boolean(process.env.VERCEL);
+const DATA_DIR = process.env.DATA_PATH
+  ? path.resolve(process.env.DATA_PATH)
+  : isServerless
+  ? path.join(os.tmpdir(), 'bid-framework-data')
+  : path.resolve(process.cwd(), 'data');
 const DATA_FILE = path.join(DATA_DIR, 'submissions.json');
 
 function ensureStore(): Submission[] {
