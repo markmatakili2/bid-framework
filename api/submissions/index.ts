@@ -4,7 +4,7 @@ import type { SubmissionType } from '../../server/types.js';
 import { getJsonBody, getQueryParams, methodNotAllowed, sendError, sendJSON } from '../_utils.js';
 import { requireAdmin } from '../_auth.js';
 
-const validTypes: SubmissionType[] = ['assessment', 'consultation', 'implementation'];
+const validTypes: SubmissionType[] = ['assessment', 'consultation', 'implementation', 'feedback'];
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   if (req.method === 'POST') {
@@ -13,10 +13,19 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const type = typeof body?.type === 'string' ? (body.type as SubmissionType) : undefined;
     const assessment = body?.assessment;
     const contact = body?.contact;
+    const feedback = body?.feedback;
 
     if (!sessionId || !type || !validTypes.includes(type)) {
       sendError(res, 400, 'sessionId and valid type are required');
       return;
+    }
+
+    if (type === 'feedback') {
+      const message = typeof feedback?.message === 'string' ? feedback.message.trim() : '';
+      if (!message) {
+        sendError(res, 400, 'Feedback message is required');
+        return;
+      }
     }
 
     try {
@@ -25,6 +34,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         type,
         assessment: body?.assessment as any,
         contact: body?.contact as any,
+        feedback: body?.feedback as any,
         userAgent: req.headers['user-agent']?.toString(),
       });
       sendJSON(res, 201, submission);

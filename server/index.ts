@@ -46,15 +46,22 @@ app.post('/api/ai/insights', async (req, res) => {
 });
 
 app.post('/api/submissions', (req, res) => {
-  const { sessionId, type, assessment, contact } = req.body ?? {};
+  const { sessionId, type, assessment, contact, feedback } = req.body ?? {};
   if (!sessionId || !type) {
     res.status(400).json({ error: 'sessionId and type are required' });
     return;
   }
-  const validTypes: SubmissionType[] = ['assessment', 'consultation', 'implementation'];
+  const validTypes: SubmissionType[] = ['assessment', 'consultation', 'implementation', 'feedback'];
   if (!validTypes.includes(type)) {
     res.status(400).json({ error: 'Invalid submission type' });
     return;
+  }
+
+  if (type === 'feedback') {
+    if (!feedback || typeof feedback.message !== 'string' || !feedback.message.trim()) {
+      res.status(400).json({ error: 'Feedback message is required' });
+      return;
+    }
   }
 
   const submission = addSubmission({
@@ -62,6 +69,7 @@ app.post('/api/submissions', (req, res) => {
     type,
     assessment,
     contact,
+    feedback,
     userAgent: req.headers['user-agent'],
   });
   res.status(201).json(submission);

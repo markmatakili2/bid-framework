@@ -18,6 +18,12 @@ export interface AssessmentPayload {
   maturityLabel: string;
 }
 
+export interface FeedbackPayload {
+  name?: string;
+  email?: string;
+  message: string;
+}
+
 async function postSubmission(body: Record<string, unknown>): Promise<void> {
   try {
     await fetch('/api/submissions', {
@@ -40,4 +46,8 @@ export function sendConsultation(contact: ContactPayload): void {
 
 export function sendImplementation(contact: ContactPayload): void {
   void postSubmission({ type: 'implementation', contact });
+}
+
+export function sendFeedback(feedback: FeedbackPayload): void {
+  void postSubmission({ type: 'feedback', feedback });
 }

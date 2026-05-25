@@ -85,8 +85,15 @@ export interface InsightRequest {
   recommendations: { t: string; d: string; tag?: string }[];
 }
 
+export interface PossibleSolution {
+  title: string;
+  explanation: string;
+}
+
 export interface AiInsights {
   source: 'ai' | 'smart';
+  humanRewrite: string;
+  possibleSolutions: PossibleSolution[];
   executiveSummary: string;
   strategicPriorities: string[];
   risks: string[];

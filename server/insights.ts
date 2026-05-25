@@ -8,8 +8,15 @@ export interface InsightRequest {
   recommendations: { t: string; d: string; tag?: string }[];
 }
 
+export interface PossibleSolution {
+  title: string;
+  explanation: string;
+}
+
 export interface AiInsights {
   source: 'ai' | 'smart';
+  humanRewrite: string;
+  possibleSolutions: PossibleSolution[];
   executiveSummary: string;
   strategicPriorities: string[];
   risks: string[];
@@ -21,10 +28,29 @@ export interface AiInsights {
 
 const SYSTEM_PROMPT = `You are a senior business innovation consultant at Tuinnov8, specialising in operational diagnostics and digital transformation for SMEs in Africa and emerging markets.
 
-You receive structured output from the Business Innovation Discovery (BID) assessment. Your role is to review the scores, findings, and recommendations and produce deeper, tailored strategic insights that go beyond the template — connecting patterns across dimensions, naming trade-offs, and prioritising action.
+You receive the structured report output from the Business Innovation Discovery (BID) framework. Your role is to rewrite the report in more human language and then surface practical, gap-focused solutions with specific implementations.
+
+CRITICAL: For "possibleSolutions", provide VERY SPECIFIC tool/technology names and implementations. Examples include:
+- Point of Sale (POS) System with description of how it improves operations
+- AI-Powered Customer Service Agent with details on handling inquiries
+- E-commerce Platform with inventory sync capabilities
+- CRM System with workflow benefits
+- Inventory Management Software with real-time tracking
+- Automated Invoicing & Payments with cash flow benefits
+- SMS/WhatsApp Messaging Platform for customer communication
+- Business Analytics Dashboard with KPI tracking
+- Document Management System for workflow automation
+- Appointment Booking System for service scheduling
+
+Each solution should be:
+1. A specific tool category or technology type
+2. Clearly addressed to the gaps identified in their assessment
+3. Concrete about the operational benefit
 
 Respond ONLY with valid JSON matching this schema (no markdown):
 {
+  "humanRewrite": "A clear, human-friendly summary of the report findings and implications.",
+  "possibleSolutions": [{ "title": "Specific tool name", "explanation": "How this specific tool directly addresses their identified gaps and improves operations." }],
   "executiveSummary": "2-3 sentences: holistic read of the organisation's position",
   "strategicPriorities": ["3-5 specific priorities ordered by impact"],
   "risks": ["2-4 risks if gaps are not addressed"],
@@ -34,7 +60,7 @@ Respond ONLY with valid JSON matching this schema (no markdown):
   "consultationAgenda": "1-2 sentences on what a Tuinnov8 discovery session should focus on first"
 }
 
-Be concrete, reference their answers where relevant, avoid generic fluff, and do not recommend specific vendors or products.`;
+Be concrete and specific. Reference the assessment responses and gaps where relevant. Avoid generic fluff. Do not recommend specific vendors or products by name, but DO name specific solution types (e.g., POS system, CRM, AI agent).`;
 
 function buildUserPrompt(ctx: InsightRequest): string {
   return JSON.stringify(
@@ -69,10 +95,29 @@ function parseInsightsJson(raw: string): Omit<AiInsights, 'source'> {
   const parsed = JSON.parse(raw) as Record<string, unknown>;
   const arr = (v: unknown): string[] =>
     Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
+  const sol = (v: unknown): PossibleSolution[] =>
+    Array.isArray(v)
+      ? v
+          .map((item) =>
+            typeof item === 'object' && item !== null
+              ? {
+                  title: typeof (item as Record<string, unknown>).title === 'string'
+                    ? (item as Record<string, unknown>).title.trim()
+                    : '',
+                  explanation: typeof (item as Record<string, unknown>).explanation === 'string'
+                    ? (item as Record<string, unknown>).explanation.trim()
+                    : '',
+                }
+              : { title: '', explanation: '' },
+          )
+          .filter((item) => item.title && item.explanation)
+      : [];
   const str = (v: unknown, fallback: string): string =>
     typeof v === 'string' && v.trim() ? v.trim() : fallback;
 
   return {
+    humanRewrite: str(parsed.humanRewrite, ''),
+    possibleSolutions: sol(parsed.possibleSolutions),
     executiveSummary: str(parsed.executiveSummary, ''),
     strategicPriorities: arr(parsed.strategicPriorities),
     risks: arr(parsed.risks),
@@ -211,8 +256,90 @@ function generateSmartFallback(ctx: InsightRequest): AiInsights {
     quickWins.push('Introduce a simple customer follow-up checklist or CRM trial for one team.');
   }
 
+  const humanRewrite = `${name} scores ${ctx.overallScore}% overall (Level ${ctx.maturityLevel} — ${ctx.maturityLabel}). The assessment shows that ${weak} is the weakest area today, while the organisation's 12-month focus on "${priority}" should guide any improvement plan. The report is best used to move from individual observations toward practical changes that reduce friction, improve visibility, and support growth.`;
+
+  const possibleSolutions: PossibleSolution[] = [];
+
+  // Generate specific solutions based on assessment gaps
+  if ((ctx.scores.ops ?? 0) < 55) {
+    possibleSolutions.push({
+      title: 'Workflow Automation Software',
+      explanation: `Automate manual, repetitive processes (approvals, data entry, handoffs) to reduce errors, eliminate key-person dependency, and free staff for higher-value work. This directly addresses ${name}'s operational maturity gap.`,
+    });
+  }
+
+  if ((ctx.scores.data ?? 0) < 55) {
+    possibleSolutions.push({
+      title: 'Business Analytics Dashboard',
+      explanation: `Create a central, real-time view of key metrics (revenue, costs, performance) so decision-makers have reliable data instead of assumptions. This closes the data visibility gap identified in the assessment.`,
+    });
+  }
+
+  if (ctx.answers.revenue === 'No online sales or booking channel') {
+    possibleSolutions.push({
+      title: 'E-commerce or Booking Platform',
+      explanation: `Add a 24/7 online sales or appointment channel so customers can transact independently. This reduces staff load on routine tasks and creates a new revenue stream for ${name}.`,
+    });
+  } else if ((ctx.scores.cx ?? 0) < 55) {
+    possibleSolutions.push({
+      title: 'Customer Relationship Management (CRM) System',
+      explanation: `Centralise customer interactions, follow-ups, and feedback in one system to improve experience consistency and staff efficiency. This addresses the customer experience gap flagged in the assessment.`,
+    });
+  }
+
+  if ((ctx.scores.digital ?? 0) < 50) {
+    possibleSolutions.push({
+      title: 'AI-Powered Customer Service Agent',
+      explanation: `Handle routine customer inquiries (FAQs, status checks, order tracking) via chatbot or SMS automation, freeing staff for complex issues and improving response time.`,
+    });
+  }
+
+  if ((ctx.scores.infra ?? 0) < 50) {
+    possibleSolutions.push({
+      title: 'Cloud Infrastructure & Data Backup',
+      explanation: `Move critical data and systems to secure cloud storage to improve reliability, enable remote work, and reduce infrastructure risk and maintenance burden.`,
+    });
+  }
+
+  if (bottleneck?.toLowerCase().includes('inventory') || bottleneck?.toLowerCase().includes('stock')) {
+    possibleSolutions.push({
+      title: 'Inventory Management System',
+      explanation: `Real-time inventory tracking synced with sales and procurement to prevent stockouts, reduce waste, and improve cash flow visibility.`,
+    });
+  }
+
+  if (bottleneck?.toLowerCase().includes('payment') || bottleneck?.toLowerCase().includes('invoice')) {
+    possibleSolutions.push({
+      title: 'Automated Invoicing & Payment Processing',
+      explanation: `Streamline billing and payment collection to accelerate cash flow, reduce payment delays, and eliminate manual reconciliation errors.`,
+    });
+  }
+
+  // Ensure at least 3 solutions are suggested
+  if (possibleSolutions.length === 0) {
+    possibleSolutions.push(
+      {
+        title: 'Process Documentation & Workflow Mapping',
+        explanation: `Create clear, step-by-step procedures for core workflows so any team member can execute consistently and new staff can onboard faster.`,
+      },
+      {
+        title: 'Business Intelligence & Reporting',
+        explanation: `Establish a weekly or monthly reporting cadence with key metrics (revenue, costs, operations KPIs) so leadership decisions are data-driven.`,
+      },
+      {
+        title: 'Customer Communication Platform',
+        explanation: `Unify customer touchpoints (SMS, email, chat) in one platform so no inquiries fall through the cracks and response times improve.`,
+      },
+    );
+  }
+
+  // Trim to max 4 solutions for clarity
+  const possibleSolutionsLimited = possibleSolutions.slice(0, 4);
+
   return {
     source: 'smart',
+    humanRewrite,
+    possibleSolutions: possibleSolutionsLimited,
     executiveSummary: `${name} scores ${ctx.overallScore}% overall (Level ${ctx.maturityLevel} — ${ctx.maturityLabel}). The diagnostic points to ${weak} as the weakest dimension relative to peers, while the stated 12-month focus on "${priority}" should guide sequencing. This analysis synthesises assessment patterns; configure an AI API key for fully personalised LLM insights.`,
     strategicPriorities: priorities.slice(0, 5),
     risks: risks.slice(0, 4),

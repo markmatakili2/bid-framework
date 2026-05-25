@@ -32,6 +32,9 @@
         Start Free Assessment
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
+      <button class="btn-ghost-land" onclick="openFeedbackModal()">
+        Give feedback
+      </button>
       <button class="btn-ghost-land">
         Takes 5 minutes
       </button>
@@ -188,6 +191,30 @@
         </select>
       </div>
       <button class="btn-submit" style="background:var(--accent);color:var(--navy)" onclick="submitImpl()">Submit Implementation Request →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEEDBACK MODAL ─────────────────────────────── -->
+<div class="modal-overlay" id="feedback-modal" onclick="if(event.target===this)closeFeedbackModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+    <div id="feedback-modal-content">
+      <h2 class="modal-title">Share your feedback</h2>
+      <p class="modal-sub">Let us know how the platform feels, what could be improved, or what would make the experience better for your business.</p>
+      <div class="form-field">
+        <label class="form-label">Full name</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Jane Mwangi">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="f-email" placeholder="jane@example.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Feedback</label>
+        <textarea class="form-input" id="f-message" rows="5" placeholder="Share your thoughts about the platform..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitFeedback()">Submit Feedback →</button>
     </div>
   </div>
 </div>

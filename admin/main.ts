@@ -3,7 +3,7 @@ import './admin.css';
 interface Submission {
   id: string;
   sessionId: string;
-  type: 'assessment' | 'consultation' | 'implementation';
+  type: 'assessment' | 'consultation' | 'implementation' | 'feedback';
   createdAt: string;
   assessment?: {
     answers: Record<string, string>;
@@ -20,6 +20,11 @@ interface Submission {
     timeline?: string;
     budget?: string;
   };
+  feedback?: {
+    name?: string;
+    email?: string;
+    message: string;
+  };
 }
 
 interface Stats {
@@ -27,6 +32,7 @@ interface Stats {
   assessments: number;
   consultations: number;
   implementations: number;
+  feedback: number;
   last24h: number;
   last7d: number;
 }
@@ -59,9 +65,9 @@ async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   });
   if (res.status === 401) {
     setToken(null);
-    renderLogin();
     const err = await res.json().catch(() => ({}));
-    throw new Error((err as { error?: string }).error || 'Unauthorized');
+    const errorMsg = (err as { error?: string }).error || 'Unauthorized';
+    throw new Error(errorMsg);
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -85,6 +91,7 @@ function typeLabel(type: string): string {
     assessment: 'Assessment',
     consultation: 'Consultation',
     implementation: 'Implementation',
+    feedback: 'Feedback',
   };
   return map[type] || type;
 }
@@ -127,7 +134,7 @@ function renderLogin(error = ''): void {
 
   document.getElementById('login-form')!.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value.trim();
     try {
       const { token } = await api<{ token: string }>('/api/admin/login', {
         method: 'POST',
@@ -163,7 +170,8 @@ function filteredSubmissions(): Submission[] {
       const sector = s.assessment?.answers?.sector?.toLowerCase() ?? '';
       const name = s.contact?.name?.toLowerCase() ?? '';
       const email = s.contact?.email?.toLowerCase() ?? '';
-      return biz.includes(q) || sector.includes(q) || name.includes(q) || email.includes(q);
+      const feedback = s.feedback?.message.toLowerCase() ?? '';
+      return biz.includes(q) || sector.includes(q) || name.includes(q) || email.includes(q) || feedback.includes(q);
     });
   }
   return list;
@@ -176,8 +184,8 @@ function renderTableRows(): string {
   }
   return list
     .map((s) => {
-      const biz = s.assessment?.answers?.bizName || s.contact?.name || '—';
-      const email = s.contact?.email || '—';
+      const biz = s.assessment?.answers?.bizName || s.contact?.name || s.feedback?.message.slice(0, 80) || '—';
+      const email = s.contact?.email || s.feedback?.email || '—';
       const sector = s.assessment?.answers?.sector || '—';
       const score = s.assessment?.overallScore;
       const scoreHtml =
@@ -215,7 +223,7 @@ function renderDashboard(stats: Stats): void {
         <header class="page-header">
           <div>
             <h1>Submissions</h1>
-            <p>All assessments, consultations, and implementation requests from the BID tool.</p>
+            <p>All submissions from the BID tool, including assessments, consultation requests, implementation requests, and platform feedback.</p>
           </div>
           <div class="header-actions">
             <input type="search" class="search-input" id="search" placeholder="Search business, email…" />
@@ -227,6 +235,7 @@ function renderDashboard(stats: Stats): void {
           <div class="stat-card accent-ops"><div class="stat-label">Assessments</div><div class="stat-value">${stats.assessments}</div></div>
           <div class="stat-card accent-cx"><div class="stat-label">Consultations</div><div class="stat-value">${stats.consultations}</div></div>
           <div class="stat-card accent-leads"><div class="stat-label">Implementations</div><div class="stat-value">${stats.implementations}</div><div class="stat-delta">${stats.last24h} in last 24h</div></div>
+          <div class="stat-card" style="background:#f8fafc;"><div class="stat-label">Feedback</div><div class="stat-value">${stats.feedback}</div></div>
         </div>
         <div class="panel">
           <div class="panel-head">
@@ -236,6 +245,7 @@ function renderDashboard(stats: Stats): void {
               <button class="filter-tab" data-filter="assessment">Assessments</button>
               <button class="filter-tab" data-filter="consultation">Consultations</button>
               <button class="filter-tab" data-filter="implementation">Implementations</button>
+              <button class="filter-tab" data-filter="feedback">Feedback</button>
             </div>
           </div>
           <div class="table-wrap">
@@ -332,6 +342,14 @@ function openDrawer(s: Submission): void {
     if (s.contact.preferredTime) html += detailRow('Preferred time', s.contact.preferredTime);
     if (s.contact.timeline) html += detailRow('Timeline', s.contact.timeline);
     if (s.contact.budget) html += detailRow('Budget', s.contact.budget);
+    html += `</dl></section>`;
+  }
+
+  if (s.feedback) {
+    html += `<section class="detail-section"><h4>Feedback</h4><dl class="detail-grid">`;
+    if (s.feedback.name) html += detailRow('Name', s.feedback.name);
+    if (s.feedback.email) html += detailRow('Email', s.feedback.email);
+    html += detailRow('Message', s.feedback.message);
     html += `</dl></section>`;
   }
 

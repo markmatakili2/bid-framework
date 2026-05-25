@@ -1541,6 +1541,28 @@ body {
   padding: 14px 16px;
 }
 .word-ai-card-wide { grid-column: 1 / -1; }
+.word-solutions-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+.word-solution-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: #f8fafc;
+}
+.word-solution-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.word-solution-explanation {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #334155;
+}
 .word-ai-card-title {
   font-size: 12px; font-weight: 700; color: #0f172a;
   margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px;

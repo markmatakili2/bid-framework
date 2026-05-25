@@ -1,4 +1,4 @@
-export type SubmissionType = 'assessment' | 'consultation' | 'implementation';
+export type SubmissionType = 'assessment' | 'consultation' | 'implementation' | 'feedback';
 
 export interface ContactInfo {
   name: string;
@@ -7,6 +7,12 @@ export interface ContactInfo {
   preferredTime?: string;
   timeline?: string;
   budget?: string;
+}
+
+export interface FeedbackPayload {
+  name?: string;
+  email?: string;
+  message: string;
 }
 
 export interface AssessmentPayload {
@@ -24,6 +30,7 @@ export interface Submission {
   createdAt: string;
   assessment?: AssessmentPayload;
   contact?: ContactInfo;
+  feedback?: FeedbackPayload;
   userAgent?: string;
 }
 
@@ -32,6 +39,7 @@ export interface DashboardStats {
   assessments: number;
   consultations: number;
   implementations: number;
+  feedback: number;
   last24h: number;
   last7d: number;
 }

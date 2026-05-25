@@ -67,6 +67,7 @@ export function getStats(): DashboardStats {
     assessments: items.filter((s) => s.type === 'assessment').length,
     consultations: items.filter((s) => s.type === 'consultation').length,
     implementations: items.filter((s) => s.type === 'implementation').length,
+    feedback: items.filter((s) => s.type === 'feedback').length,
     last24h: items.filter((s) => now - new Date(s.createdAt).getTime() < day).length,
     last7d: items.filter((s) => now - new Date(s.createdAt).getTime() < week).length,
   };

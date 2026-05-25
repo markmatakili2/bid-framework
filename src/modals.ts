@@ -1,4 +1,4 @@
-import { sendConsultation, sendImplementation } from './api/client';
+import { sendConsultation, sendImplementation, sendFeedback } from './api/client';
 import { g, gInput, gSelect } from './dom';
 import { resetState } from './state';
 
@@ -36,6 +36,33 @@ export function submitImpl(): void {
       <p class="success-sub">Thank you, ${name}. The Tuinnov8 expert team has received your request and will reach out within 24 hours to begin scoping your project based on your BID report.</p>
     </div>`;
   setTimeout(closeImplModal, 4500);
+}
+
+export function openFeedbackModal(): void {
+  g('feedback-modal')!.classList.add('open');
+}
+
+export function closeFeedbackModal(): void {
+  g('feedback-modal')!.classList.remove('open');
+}
+
+export function submitFeedback(): void {
+  const name = gInput('f-name')?.value.trim() ?? '';
+  const email = gInput('f-email')?.value.trim() ?? '';
+  const message = gInput('f-message')?.value.trim() ?? '';
+  if (!message) {
+    alert('Please share your feedback before submitting.');
+    return;
+  }
+
+  sendFeedback({ name, email, message });
+  g('feedback-modal-content')!.innerHTML = `
+    <div class="submit-success">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Thanks for your feedback!</div>
+      <p class="success-sub">Your message has been received. We appreciate your input and will review it as we improve the platform.</p>
+    </div>`;
+  setTimeout(closeFeedbackModal, 4000);
 }
 
 export function submitConsultation(): void {

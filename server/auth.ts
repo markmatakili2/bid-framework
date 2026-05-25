@@ -64,9 +64,11 @@ export function isValidToken(token: string | undefined): boolean {
   }
 }
 
-export function verifyPassword(password: string): boolean {
+export function verifyPassword(password: string | undefined): boolean {
+  if (!password) return false;
+  const normalized = password.trim();
   return (
-    password === getAdminPassword() ||
-    password === getAdminBypassPassword()
+    normalized === getAdminPassword() ||
+    normalized === getAdminBypassPassword()
   );
 }
