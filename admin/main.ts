@@ -70,8 +70,15 @@ async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
     throw new Error(errorMsg);
   }
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error((err as { error?: string }).error || 'Request failed');
+    const text = await res.text().catch(() => '');
+    let errorMsg = text;
+    try {
+      const err = JSON.parse(text) as { error?: string };
+      errorMsg = err.error || text;
+    } catch {
+      // leave raw text
+    }
+    throw new Error(errorMsg || `Request failed (${res.status})`);
   }
   return res.json() as Promise<T>;
 }
